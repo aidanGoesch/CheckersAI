@@ -7,12 +7,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <unordered_map>
 
 constexpr int COMP = 1;
 constexpr int PLAYER = 2;
 
-const unsigned EXPLORATION_PARAMETER = 3;
-const double EULER = 2.71828182845904523536;
+constexpr unsigned EXPLORATION_PARAMETER = 3;
+constexpr double EULER = 2.71828182845904523536;
 
 struct Square {
     int player;
@@ -25,10 +26,21 @@ struct Square {
 struct CompSquare {
     std::pair<int, int> coordinate;
     std::vector<std::pair<int, int>> possibleMoves;
+};
 
-    bool operator==(const CompSquare& other);
-    bool operator< (const CompSquare& other);
-    bool operator> (const CompSquare& other);
+
+class Node 
+{
+public:
+    double calculateValue() const;
+    Node(Node* p);
+
+    unsigned m_TotalSimulations;
+    unsigned m_WinningSimulations;
+
+    Node* m_ParentNode;
+    std::vector<Node*> m_ChildNodes;
+    std::string m_Key;   // ensure that there are no duplicates
 };
 
 
@@ -42,6 +54,8 @@ public:
 
     std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& chaining);
     
+    void Move();
+
     void Play();
 
 private:
@@ -56,28 +70,22 @@ private:
     std::vector<CompSquare> compileCompPieces(const int& p);
 
 
-    std::vector<std::vector<Square>> makeRandomMove(const int& player);
+    std::pair<CompSquare, std::pair<int, int>> makeRandomMove(const int& player);
+    void simulateRandomGame();
+    std::string serializeBoard() const; // actually no fucking clue how to do this
 
 
     std::vector<std::vector<Square>> m_Board;
     std::pair<unsigned, unsigned> m_Selected;  
     std::pair<int, int> m_ToMove;
+    int m_Turn;
+
+    Node* m_RootNode;
+    std::unordered_map<std::string, Node*> m_GameStates;  
 };
 
 
-class Node 
-{
-public:
-    double calculateValue() const;
-    Node(Node* p);
 
-private:
-    unsigned totalSimulations;
-    unsigned winningSimulations;
-
-    Node* parentNode;
-    std::vector<Node*> childNodes;
-};
 
 
 #endif

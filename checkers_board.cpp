@@ -27,7 +27,7 @@ void ClearConsole() {
 }
 
 
-CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1})
+CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(PLAYER), m_RootNode(nullptr)
 {
     unsigned offset = 1;
     for (int y = 0; y < 8; ++y)
@@ -191,14 +191,18 @@ bool CheckersBoard::isChain(const unsigned& oppositePlayer)
     }
 
     if (m_Board[y][x].kinged && y < 6)
-    std::cout << 1;
+    // std::cout << 1;
     {  // Backward
         if (x > 1 && m_Board[y+1][x-1].player == 1 && m_Board[y+2][x-2].player == 0)
+        {
             return true;
-        std::cout << 2;
+        }
+        // std::cout << 2;
         if (x < 7 && m_Board[y+1][x+1].player == 1 && m_Board[y+2][x+2].player == 0)
+        {
             return true;
-        std::cout << 3;
+        }
+        // std::cout << 3;
     }
     return false;
 }
@@ -319,7 +323,6 @@ void CheckersBoard::movePiece()
     // if there is another move in the chain recurse
     if (chainStarted && isChain(1))
     {
-        std::cout << "chain" << std::endl;
         GetPlayerMove(true);
     }
 }
@@ -343,7 +346,6 @@ void CheckersBoard::GetPlayerMove(const bool chaining)
         unsigned x = m_ToMove.second;
 
         highlightPossibleMoves(PLAYER, y, x, chaining);
-        std::cout << 1 << std::endl;
 
         // get where the palyer wants to move the piece
         tmp = SelectSquare("Which Square Would You Like to Move This Piece to?", true);
@@ -388,10 +390,10 @@ int CheckersBoard::winner() const
     
     // std::cout << countOne << " " << countTwo;
     if (countOne == 0 && countTwo > 0)   // player wins
-        return 2;
+        return PLAYER;
     
-    if (countOne > 0 && countTwo == 0)   // CPU wins
-        return 1;
+    if (countOne > 0 && countTwo == 0)   // COMP wins
+        return COMP;
 
     // check for not being able to make any other moves
 
@@ -412,26 +414,46 @@ void CheckersBoard::checkKings()
 }
 
 
+void CheckersBoard::Move()
+{
+    if (m_Turn == PLAYER)
+    {
+        GetPlayerMove(false);
+
+        m_Turn = COMP;
+    }
+    else if (m_Turn == COMP)
+    {
+        // bestMoveFunction
+
+        m_Turn = PLAYER;
+    }
+}
+
+
 void CheckersBoard::Play()
 {
 
     ClearConsole();
-    // GetPlayerMove(false);
+    Move();
     
-    while (winner() == 0) 
-    {
-        // std::cout << 1;w
-        GetPlayerMove(false);
-    }
+    std::cout << m_Turn << std::endl;
+
+    // while (winner() == 0) 
+    // {
+    //     // std::cout << 1;w
+    //     Move();
+    // }
     
 
     Draw();
+    long unsigned int s = serializeBoard();
 }
 
 
 
 Node::Node(Node* p) 
-: totalSimulations(0), winningSimulations(0), parentNode(p), childNodes(std::vector<Node*>{nullptr}) 
+: m_TotalSimulations(0), m_WinningSimulations(0), m_ParentNode(p), m_ChildNodes(std::vector<Node*>{nullptr}), m_Key("") 
 {
 }
 
@@ -455,40 +477,105 @@ std::vector<CompSquare> CheckersBoard::compileCompPieces(const int& p)
 }
 
 
-std::vector<std::vector<Square>> CheckersBoard::makeRandomMove(const int& player)
+std::pair<CompSquare, std::pair<int, int>> CheckersBoard::makeRandomMove(const int& player)
 {
     // get pieces that can move
     std::vector<CompSquare> pieces = compileCompPieces(player);   // gets a list of pieces and their possible moves
-    
-    // iterate over the vector - if there is a possible move, add it to a dif vector
+    std::vector<CompSquare> moveablePieces;
+
+    // filter out all of the pieces that can't be moved
+    std::copy_if (pieces.begin(), pieces.end(), std::back_inserter(moveablePieces), [](CompSquare i){return i.possibleMoves.size()>0;} );
 
     // randomly pick a piece
+    size_t bound = moveablePieces.size();
 
-    // get all of the possible moves for that piece
+    std::srand(std::time(0));  
+    CompSquare pieceToMove = moveablePieces[std::rand() % bound];
 
     // randomly pick somewhere to move
+    bound = pieceToMove.possibleMoves.size();
+    std::pair<int, int> move = pieceToMove.possibleMoves[std::rand() % bound];
+
+
+    // return a pair with the piece and the move -- change return type
+}
+
+
+std::string CheckersBoard::serializeBoard() const
+{
+    /* function that gets the keys for the map that keeps track of what states
+     have been visited before */
+    std::vector<Square> boardList;
+
+    bool toggle = true;
+
+    for ( std::vector<Square> row : m_Board )   // put the 2d board into one very long list
+    {
+        boardList.insert( boardList.end(), row.begin(), row.end() );
+
+        if (toggle) 
+            boardList.push_back(Square{0, false, false, false});
+        else
+            boardList.pop_back();
+
+        toggle = !toggle;
+    }
+
+    std::string boardString = "";
+    for (int i = 1 ; i < boardList.size() ; i += 2)   // get every other element of the list
+    {
+        boardString += std::to_string(boardList[i].player);
+    }
+    return boardString;
+}
+
+
+void CheckersBoard::simulateRandomGame()
+{
+    CheckersBoard tmp = *this;  // copy the board so that you can reset after the simulation
+    int currentPlayer = m_Turn;
+    while (winner() == 0)
+    {
+        makeRandomMove(currentPlayer);
+
+        currentPlayer = (currentPlayer == PLAYER) ? COMP : PLAYER;   // flip the current player
+
+        std::string tmpKey = serializeBoard();
+
+        if (m_GameStates.find(tmpKey) != m_GameStates.end())
+        {
+            Node* currentNode = m_GameStates[tmpKey];
+
+            currentNode->m_TotalSimulations ++;
+        }
+        else
+            Node* currentNode = new Node{nullptr};  // change this so that it points at the parent
+
+        // check to see if the node exists
+
+        // if it does then update the visit count
+
+        // if it doesn't then create a new node
+    }
+
+    // back propogate
 }
 
 
 
 double Node::calculateValue() const 
 {
-    return (winningSimulations / (double) totalSimulations) + 
+    return (m_WinningSimulations / (double) m_TotalSimulations) + 
         EXPLORATION_PARAMETER * std::sqrt(
-            (std::log((float) parentNode->winningSimulations) / std::log(EULER) )   // replace base 10 with e
-                            / (float) parentNode->totalSimulations);
+            (std::log((float) m_ParentNode->m_WinningSimulations) / std::log(EULER) )   // replace base 10 with e
+                            / (float) m_ParentNode->m_TotalSimulations);
 }
 
-
-bool CompSquare::operator==(const CompSquare& other)
-{
-    return (other.coordinate == coordinate) && (other.possibleMoves == possibleMoves);
-}
-bool CompSquare::operator< (const CompSquare& other)
-{
-    return (other.coordinate == coordinate) && (other.possibleMoves.size() > possibleMoves.size());
-}
-bool CompSquare::operator> (const CompSquare& other)
-{
-    return (other.coordinate == coordinate)  && (other.possibleMoves.size() < possibleMoves.size());
-}
+// simulate game
+// keep track of root node and tree with pointers, keep track with unorderedmap to update stats
+// update root node
+// while there is no winner and moves are able to be made
+//      Randomly pick a move
+//      make the move
+//      update stats for new node in unordered_map?
+//      \_/(._.)\_/
