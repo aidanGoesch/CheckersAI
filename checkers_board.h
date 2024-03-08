@@ -33,7 +33,7 @@ class Node
 {
 public:
     double calculateValue() const;
-    Node(Node* p);
+    Node(const std::string& key, Node* p);
 
     unsigned m_TotalSimulations;
     unsigned m_WinningSimulations;
@@ -41,6 +41,7 @@ public:
     Node* m_ParentNode;
     std::vector<Node*> m_ChildNodes;
     std::string m_Key;   // ensure that there are no duplicates
+    int m_Turn;          // Indicates who's turn it is (e.i. who is making the move / who can win)
 };
 
 
@@ -61,10 +62,10 @@ public:
 private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
     void GetPlayerMove(const bool chaining);
-    bool isChain(const unsigned& oppositePlayer);
+    bool isChain(const unsigned& y, const unsigned& x, const unsigned& oppositePlayer);
     void checkKings();
     void movePiece();
-    int winner() const;
+    int winner();
 
     void getCompMove();
     std::vector<CompSquare> compileCompPieces(const int& p);
@@ -73,6 +74,7 @@ private:
     std::pair<CompSquare, std::pair<int, int>> makeRandomMove(const int& player);
     void simulateRandomGame();
     std::string serializeBoard() const; // actually no fucking clue how to do this
+    void makeBestCompMove();
 
 
     std::vector<std::vector<Square>> m_Board;
