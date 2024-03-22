@@ -47,7 +47,7 @@ CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(
 
     m_Board[6][3].selected = true;
     m_Board[3][6].player = PLAYER;
-    // m_Board[0][5].player = 0;
+    m_Board[0][5].player = 0;
     m_Board[2][7].player = 0;
     m_Board[4][5].player = 0;
     m_Board[5][4].player = 0;
@@ -204,48 +204,54 @@ bool CheckersBoard::isChain(const unsigned& y, const unsigned& x, const unsigned
 }
 
 
-std::vector<std::pair<int, int>> CheckersBoard::highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& chaining)
+std::vector<std::pair<int, int>> CheckersBoard::highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x)
 {
     std::vector<std::pair<int, int>> ret;
     // highlight possible moves for that square
 
     bool forceMove = false;  // forces players to take a piece if they can
     int opp = (piece == PLAYER) ? 1 : 2;
-
-    if (y > 1)
+    if ((m_Board[y][x].kinged && piece == COMP) | piece == PLAYER)
     {
-        if (x > 1 && m_Board[y-1][x-1].player == opp && m_Board[y-2][x-2].player == 0)
+        if (y > 1)  // highlights up moves - capture
         {
-            m_Board[y-2][x-2].highlighted = true;
-            forceMove = true;
-            ret.push_back({y-2, x-2});
+            if (x > 1 && m_Board[y-1][x-1].player == opp && m_Board[y-2][x-2].player == 0)
+            {
+                m_Board[y-2][x-2].highlighted = true;
+                forceMove = true;
+                ret.push_back({y-2, x-2});
+            }
+
+            if (x < 7 && m_Board[y-1][x+1].player == opp && m_Board[y-2][x+2].player == 0)
+            {
+                m_Board[y-2][x+2].highlighted = true;
+                forceMove = true;
+                ret.push_back({y-2, x+2});
+            }
         }
 
-        if (x < 7 && m_Board[y-1][x+1].player == opp && m_Board[y-2][x+2].player == 0)
+        if (y > 0  && !forceMove)  // highlights up moves - non capture
         {
-            m_Board[y-2][x+2].highlighted = true;
-            forceMove = true;
-            ret.push_back({y-2, x+2});
+            // Forwards
+            if (x > 1 && m_Board[y-1][x-1].player == 0)
+            {
+                m_Board[y-1][x-1].highlighted = true;
+                ret.push_back({y-1, x-1});
+            }
+
+            if (x < 7 && m_Board[y-1][x+1].player == 0)
+            {
+                m_Board[y-1][x+1].highlighted = true;
+                ret.push_back({y-1, x+1});
+            }
         }
-    }
-
-    if (y > 0 && !chaining  && !forceMove)  // highlights all possible moves
-    {
-        // Forwards
-        if (x > 1 && m_Board[y-1][x-1].player == 0)
-            m_Board[y-1][x-1].highlighted = true;
-            ret.push_back({y-1, x-1});
-
-        if (x < 7 && m_Board[y-1][x+1].player == 0)
-            m_Board[y-1][x+1].highlighted = true;
-            ret.push_back({y-1, x+1});
     }
     
 
-    if (m_Board[y][x].kinged)
+    if ((m_Board[y][x].kinged && piece == PLAYER) | piece == COMP)  
     {
         forceMove = false;
-        if (m_Board[y][x].kinged && y < 6) 
+        if (m_Board[y][x].kinged && y < 6) // highlights down moves - capture
         {
             if (x > 1 && m_Board[y+1][x-1].player == opp && m_Board[y+2][x-2].player == 0)
             {
@@ -262,16 +268,20 @@ std::vector<std::pair<int, int>> CheckersBoard::highlightPossibleMoves(const int
             }
         }
 
-        if (y < 7 && !chaining && !forceMove)
+        if (y < 7 && !forceMove)  // highlights down moves - non capture
         {
             // Backwards
             if (x > 1 && m_Board[y+1][x-1].player == 0)
+            {
                 m_Board[y+1][x-1].highlighted = true;
                 ret.push_back({y+1, x-1});
+            }
 
             if (x < 7 && m_Board[y+1][x+1].player == 0)
+            {
                 m_Board[y+1][x+1].highlighted = true;
                 ret.push_back({y+1, x+1});
+            }
         }        
     }
     return ret;
@@ -345,7 +355,7 @@ void CheckersBoard::GetPlayerMove(const bool chaining)
         unsigned y = m_ToMove.first;
         unsigned x = m_ToMove.second;
 
-        highlightPossibleMoves(PLAYER, y, x, chaining);
+        highlightPossibleMoves(PLAYER, y, x);
 
         // get where the palyer wants to move the piece
         tmp = SelectSquare("Which Square Would You Like to Move This Piece to?", true);
@@ -380,10 +390,10 @@ int CheckersBoard::winner()
     {
         for (int j = 0; j < 8; ++j)
         {
-            if (m_Board[i][j].player == 1)
+            if (m_Board[i][j].player == COMP)
                 ++countOne;
             
-            if (m_Board[i][j].player == 2)
+            if (m_Board[i][j].player == PLAYER)
                 ++countTwo;
         }
     }
@@ -395,7 +405,6 @@ int CheckersBoard::winner()
     if (countOne > 0 && countTwo == 0)   // COMP wins
         return COMP;
 
-
     // check for not being able to make any other moves
     std::vector<CompSquare> playerPieces;
     std::vector<CompSquare> compPieces;
@@ -405,18 +414,25 @@ int CheckersBoard::winner()
         {
             if (m_Board[i][j].player == COMP)
             {
-                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(COMP, i, j, false);
+                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(COMP, i, j);
+
+                // std::cout << "comp moves: " << std::endl;
+                // for (auto e : tmp) {
+                //     std::cout << e.first << " " << e.second << std::endl;
+                // }
+
                 compPieces.push_back(CompSquare{std::make_pair(i, j), tmp});
             }
             else if (m_Board[i][j].player == PLAYER)
             {
-                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(PLAYER, i, j, false);
+                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(PLAYER, i, j);
+
                 playerPieces.push_back(CompSquare{std::make_pair(i, j), tmp});
             }
         }
     }
 
-    auto func = [](const CompSquare& c) { return c.possibleMoves.size() == 0; };
+    auto func = [](const CompSquare& c) { return c.possibleMoves.size() > 0; };
 
     if (!std::any_of(playerPieces.begin(), playerPieces.end(), func))
     {
@@ -485,7 +501,19 @@ void CheckersBoard::Move()
 
 void CheckersBoard::makeBestCompMove()
 {
-    ;
+    std::cout << "number of children: " << m_RootNode->m_ChildNodes.size() << std::endl;
+    std::cout << "Tree Size: " << m_GameStates.size() << std::endl;
+    for (Node* childNode : m_RootNode->m_ChildNodes)
+    {
+        if (childNode != nullptr)
+            childNode->calculateValue();
+    }
+    
+
+    std::vector<Node*> children = m_RootNode->m_ChildNodes;
+    Node* bestNode = *std::max_element(children.begin(), children.end(), [](Node* a, Node* b){ return a->m_Score < b->m_Score; });
+    std::cout << "what" << std::endl;
+    std::cout << "best move: " << bestNode->m_Key << std::endl;
 }
 
 
@@ -493,9 +521,9 @@ void CheckersBoard::Play()
 {
 
     ClearConsole();
-    Move();
+    // Move();
     
-    std::cout << m_Turn << std::endl;
+    // std::cout << m_Turn << std::endl;
 
     // while (winner() == 0) 
     // {
@@ -505,20 +533,22 @@ void CheckersBoard::Play()
     
 
     Draw();
-    std::string s = serializeBoard();
-    auto t = (winner() == PLAYER) ? "PLAYER" : "COMP";
-    std::cout << "winner: " << t << std::endl;
+    Move();
+    Draw();
+    Move();
+
+    makeBestCompMove();
 }
 
 
 
 Node::Node(const std::string& key, Node* p) 
-: m_TotalSimulations(0), m_WinningSimulations(0), m_ParentNode(p), m_ChildNodes(std::vector<Node*>{}), m_Key(key) 
+: m_TotalSimulations(0), m_WinningSimulations(0), m_ParentNode(p), m_ChildNodes(std::vector<Node*>{}), m_Key(key), m_Score(-1.0) 
 {
 }
 
 
-std::vector<CompSquare> CheckersBoard::compileCompPieces(const int& p)
+std::vector<CompSquare> CheckersBoard::compileCompPieces(const int& p, const bool& c)
 {
     std::vector<CompSquare> pieces;
     for (int i = 0; i < 8; ++i)
@@ -527,7 +557,8 @@ std::vector<CompSquare> CheckersBoard::compileCompPieces(const int& p)
         {
             if (m_Board[i][j].player == p)
             {
-                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(p, i, j, false);
+                std::vector<std::pair<int, int>> tmp = highlightPossibleMoves(p, i, j);
+
                 pieces.push_back(CompSquare{std::make_pair(i, j), tmp});
             }
             
@@ -537,18 +568,30 @@ std::vector<CompSquare> CheckersBoard::compileCompPieces(const int& p)
 }
 
 
-std::pair<CompSquare, std::pair<int, int>> CheckersBoard::makeRandomMove(const int& player)
+bool CheckersBoard::makeRandomMove(const int& player, const bool& chaining)
 {
     // get pieces that can move
-    std::vector<CompSquare> pieces = compileCompPieces(player);   // gets a list of pieces and their possible moves
+    std::vector<CompSquare> pieces = compileCompPieces(player, chaining);   // gets a list of pieces and their possible moves
     std::vector<CompSquare> moveablePieces;
+
+    if (DEBUG) {
+        std::cout << "piece's possible moves: " << std::endl;
+        for (auto e : pieces)
+        {
+            std::cout << "piece" << std::endl;
+            for (auto f : e.possibleMoves)
+            {
+                std::cout << "\t" << f.first << " " << f.second << std::endl;
+            }
+        }
+    }
 
     // filter out all of the pieces that can't be moved
     std::copy_if (pieces.begin(), pieces.end(), std::back_inserter(moveablePieces), [](CompSquare i){return i.possibleMoves.size()>0;} );
 
     // randomly pick a piece
     size_t bound = moveablePieces.size();
-
+    
     std::srand(std::time(0));  
     CompSquare pieceToMove = moveablePieces[std::rand() % bound];
 
@@ -556,8 +599,31 @@ std::pair<CompSquare, std::pair<int, int>> CheckersBoard::makeRandomMove(const i
     bound = pieceToMove.possibleMoves.size();
     std::pair<int, int> move = pieceToMove.possibleMoves[std::rand() % bound];
 
+    int y = pieceToMove.coordinate.first;
+    int x = pieceToMove.coordinate.second;
+
+    int ny = move.first;
+    int nx = move.second;
+
+    m_Board[y][x].player = 0;
+    m_Board[ny][nx].player = player;
+
+    // transfer king status
+    m_Board[ny][nx].kinged = m_Board[y][x].kinged;
+    m_Board[y][x].kinged = false;
+
+    bool chainStarted = false;   // use this later
+    if (abs(nx - x) > 1)  // check if it is taking another piece
+    {
+        chainStarted = true;
+        int z = ((y - ny) / 2) + ny;
+        int w = ((x - nx) / 2) + nx;
+
+        m_Board[z][w].player = 0;
+    }
 
     // return a pair with the piece and the move -- change return type
+    return chainStarted;
 }
 
 
@@ -592,19 +658,46 @@ std::string CheckersBoard::serializeBoard() const
 
 void CheckersBoard::simulateRandomGame()
 {
-    CheckersBoard tmp = *this;  // copy the board so that you can reset after the simulation
+    // CheckersBoard tmp = *this;  // copy the board so that you can reset after the simulation
+    // things that need to be reset after every game:
+    const int tmpTurn = m_Turn;
+    // Node* tmpRoot = m_RootNode;   maybe not necessary?
+    // const std::pair<int, int> tmpToMove = m_S;
+    const std::vector<std::vector<Square>> tmpBoard = m_Board;   // this might need to be a copy
+        // turn
+        // rootnode
+        // selected
+        // board
+
+
     int currentPlayer = m_Turn;
     Node* prevNode = nullptr;
     Node* currentNode = m_RootNode;
+    bool chaining = false;
 
     while (winner() == 0)
     {
+        // std::cout << "AAAAAAAAAAAAAAA" << currentPlayer << std::endl;
         prevNode = currentNode;
-        makeRandomMove(currentPlayer);
+        chaining = makeRandomMove(currentPlayer, chaining);
 
-        currentPlayer = (currentPlayer == PLAYER) ? COMP : PLAYER;   // flip the current player
+        checkKings();
+
+        if (!chaining)
+            currentPlayer = (currentPlayer == PLAYER) ? COMP : PLAYER;   // flip the current player
 
         std::string tmpKey = serializeBoard();
+
+        if (DEBUG) {
+            std::cout << "currentBoard (turn = " << currentPlayer << ")"  << std::endl;
+            for (auto r : m_Board)
+            {
+                for (auto e : r)
+                    std::cout << e.player;
+                
+                std::cout << std::endl;
+            }
+        }
 
         if (m_GameStates.find(tmpKey) != m_GameStates.end())  // Check to see if the node exists
         {
@@ -612,19 +705,24 @@ void CheckersBoard::simulateRandomGame()
         }
         else
         {
-            currentNode = new Node{tmpKey, nullptr};  // change this so that it points at the parent
+            currentNode = new Node{tmpKey, prevNode};  // change this so that it points at the parent
             m_GameStates[tmpKey] = currentNode;      // add to dictionary
         }
 
         currentNode->m_TotalSimulations ++;  // update visit count
-        currentNode->m_ChildNodes.push_back(prevNode);
+        // currentNode->m_ParentNode = prevNode;
+        prevNode->m_ChildNodes.push_back(currentNode);
     }
 
     int simWinner = winner();
 
+    if (DEBUG) std::cout << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
+    std::cout << "number of nodes explored: "  << m_GameStates.size() << std::endl;
+
     // back propogate
     for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
     {
+        // std::cout << "bad" << std::endl;
         if (currentNode->m_Turn == simWinner)
         {
             currentNode->m_WinningSimulations ++;
@@ -632,17 +730,24 @@ void CheckersBoard::simulateRandomGame()
     }
 
     // restore to previous game state
-    *this = tmp;
+    m_Board = tmpBoard;
+    m_Turn = tmpTurn;
+    
+    if (DEBUG) std::cout << "Reset test: " << serializeBoard() << std::endl;
 }
 
 
 
-double Node::calculateValue() const 
+double Node::calculateValue() 
 {
-    return (m_WinningSimulations / (double) m_TotalSimulations) + 
+    /* calculates the score for node that it is called on */
+
+    m_Score = (m_WinningSimulations / (double) m_TotalSimulations) + 
         EXPLORATION_PARAMETER * std::sqrt(
             (std::log((float) m_ParentNode->m_WinningSimulations) / std::log(EULER) )   // replace base 10 with e
                             / (float) m_ParentNode->m_TotalSimulations);
+
+    return m_Score;
 }
 
 // simulate game

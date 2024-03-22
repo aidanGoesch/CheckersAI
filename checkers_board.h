@@ -15,6 +15,8 @@ constexpr int PLAYER = 2;
 constexpr unsigned EXPLORATION_PARAMETER = 3;
 constexpr double EULER = 2.71828182845904523536;
 
+constexpr bool DEBUG = false;
+
 struct Square {
     int player;
     bool selected;
@@ -32,7 +34,7 @@ struct CompSquare {
 class Node 
 {
 public:
-    double calculateValue() const;
+    double calculateValue();
     Node(const std::string& key, Node* p);
 
     unsigned m_TotalSimulations;
@@ -42,6 +44,7 @@ public:
     std::vector<Node*> m_ChildNodes;
     std::string m_Key;   // ensure that there are no duplicates
     int m_Turn;          // Indicates who's turn it is (e.i. who is making the move / who can win)
+    double m_Score;
 };
 
 
@@ -53,7 +56,7 @@ public:
 
     void Draw();
 
-    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& chaining);
+    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x);
     
     void Move();
 
@@ -68,10 +71,10 @@ private:
     int winner();
 
     void getCompMove();
-    std::vector<CompSquare> compileCompPieces(const int& p);
+    std::vector<CompSquare> compileCompPieces(const int& p, const bool& c);
 
 
-    std::pair<CompSquare, std::pair<int, int>> makeRandomMove(const int& player);
+    bool makeRandomMove(const int& player, const bool& chaining);
     void simulateRandomGame();
     std::string serializeBoard() const; // actually no fucking clue how to do this
     void makeBestCompMove();
