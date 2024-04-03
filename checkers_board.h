@@ -8,6 +8,7 @@
 #include <ctime>
 #include <algorithm>
 #include <unordered_map>
+#include <string>
 
 constexpr int COMP = 1;
 constexpr int PLAYER = 2;
@@ -35,7 +36,7 @@ class Node
 {
 public:
     double calculateValue();
-    Node(const std::string& key, Node* p);
+    Node(const std::string& key, Node* p, const bool& kinged);
 
     unsigned m_TotalSimulations;
     unsigned m_WinningSimulations;
@@ -45,7 +46,8 @@ public:
     std::string m_Key;   // ensure that there are no duplicates
     int m_Turn;          // Indicates who's turn it is (e.i. who is making the move / who can win)
     double m_Score;
-};
+    bool m_KingedPiece;   // Indicates whether a piece was kinged to get to this new state
+}; 
 
 
 class CheckersBoard
@@ -56,7 +58,7 @@ public:
 
     void Draw();
 
-    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x);
+    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& modify);
     
     void Move();
 
@@ -66,18 +68,20 @@ private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
     void GetPlayerMove(const bool chaining);
     bool isChain(const unsigned& y, const unsigned& x, const unsigned& oppositePlayer);
-    void checkKings();
+    bool checkKings();
     void movePiece();
     int winner();
 
     void getCompMove();
-    std::vector<CompSquare> compileCompPieces(const int& p, const bool& c);
+    std::vector<CompSquare> compileCompPieces(const int& p);
 
 
-    bool makeRandomMove(const int& player, const bool& chaining);
+    bool makeRandomMove(const int& player, const int& i);
     void simulateRandomGame();
     std::string serializeBoard() const; // actually no fucking clue how to do this
+    std::vector<std::vector<int>> deserializeBoard(const std::string& serial) const;
     void makeBestCompMove();
+    void updateRootNode();
 
 
     std::vector<std::vector<Square>> m_Board;
