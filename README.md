@@ -1,1 +1,3 @@
 # CheckersAI
+
+## WORK IN PROGRESS
