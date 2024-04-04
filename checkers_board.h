@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <string>
+#include <random>
 
 constexpr int COMP = 1;
 constexpr int PLAYER = 2;
@@ -17,6 +18,7 @@ constexpr unsigned EXPLORATION_PARAMETER = 3;
 constexpr double EULER = 2.71828182845904523536;
 
 constexpr bool DEBUG = false;
+// bool S = true;
 
 struct Square {
     int player;
@@ -36,7 +38,7 @@ class Node
 {
 public:
     double calculateValue();
-    Node(const std::string& key, Node* p, const bool& kinged);
+    Node(const std::string& key, Node* p, const bool& kinged, const int& turn);
 
     unsigned m_TotalSimulations;
     unsigned m_WinningSimulations;
@@ -64,6 +66,11 @@ public:
 
     void Play();
 
+    std::string serializeBoard() const; // actually no fucking clue how to do this
+    std::vector<std::vector<int>> deserializeBoard(const std::string& serial) const;
+    std::vector<std::vector<Square>> m_Board;
+     bool makeRandomMove(const int& player,  bool& S, const int& i);
+
 private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
     void GetPlayerMove(const bool chaining);
@@ -76,18 +83,22 @@ private:
     std::vector<CompSquare> compileCompPieces(const int& p);
 
 
-    bool makeRandomMove(const int& player, const int& i);
+    // bool makeRandomMove(const int& player,  bool& S, const int& i);
     void simulateRandomGame();
-    std::string serializeBoard() const; // actually no fucking clue how to do this
-    std::vector<std::vector<int>> deserializeBoard(const std::string& serial) const;
+
+    // std::string serializeBoard() const; // actually no fucking clue how to do this
+    // std::vector<std::vector<int>> deserializeBoard(const std::string& serial) const;
+
     void makeBestCompMove();
     void updateRootNode();
 
 
-    std::vector<std::vector<Square>> m_Board;
+    // std::vector<std::vector<Square>> m_Board;
     std::pair<unsigned, unsigned> m_Selected;  
     std::pair<int, int> m_ToMove;
     int m_Turn;
+    std::mt19937 m_Gen;
+    std::uniform_int_distribution<> distrib; // Uniform distribution
 
     Node* m_RootNode;
     std::unordered_map<std::string, Node*> m_GameStates;  
