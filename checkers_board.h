@@ -4,8 +4,6 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-#include <cstdlib>
-#include <ctime>
 #include <algorithm>
 #include <unordered_map>
 #include <string>
@@ -14,7 +12,7 @@
 constexpr int COMP = 1;
 constexpr int PLAYER = 2;
 
-constexpr unsigned EXPLORATION_PARAMETER = 3;
+constexpr double EXPLORATION_PARAMETER = 1.4142;
 constexpr double EULER = 2.71828182845904523536;
 
 constexpr bool DEBUG = false;
@@ -31,6 +29,7 @@ struct Square {
 struct CompSquare {
     std::pair<int, int> coordinate;
     std::vector<std::pair<int, int>> possibleMoves;
+    // void opterator=(const CompSquare& c);
 };
 
 
@@ -60,7 +59,7 @@ public:
 
     void Draw();
 
-    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& modify);
+    std::vector<std::pair<int, int>> highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& modify, const bool& forceTake);
     
     void Move();
 
@@ -69,7 +68,7 @@ public:
     std::string serializeBoard() const; // actually no fucking clue how to do this
     std::vector<std::vector<int>> deserializeBoard(const std::string& serial) const;
     std::vector<std::vector<Square>> m_Board;
-     bool makeRandomMove(const int& player,  bool& S, const int& i);
+     bool makeRandomMove(bool& S, const int& y0, const int& x0);
 
 private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
@@ -80,7 +79,7 @@ private:
     int winner();
 
     void getCompMove();
-    std::vector<CompSquare> compileCompPieces(const int& p);
+    std::vector<CompSquare> compileCompPieces(const int& p, const bool& chaining);
 
 
     // bool makeRandomMove(const int& player,  bool& S, const int& i);
