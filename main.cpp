@@ -1,22 +1,37 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+// for tests
+
+// #define CATCH_CONFIG_RUNNER
+// #include "Catch2/catch.hpp"
+
+// #include <iostream>
+
+// int main(int argc, char* argv[])
+// {
+//     const int retval = Catch::Session().run(argc, argv);
+    
+//     return retval;
+// }
+
 
 #include "checkers_board.h"
 
-
 int main() 
 {
-    // std::cout << "Hello World" << std::endl;
     CheckersBoard cb;
 
     cb.Play();
-    // std::srand(std::time(0));
 
-    // // RAND_MAX = 32767;
-    // for (int i = 0; i < 10 ; ++i)
+    // "100010002000000100000000000000001";
+    // auto tmp = cb.deserializeBoard("100010002000000100000000000000001");
+
+    // for (auto row : tmp)
     // {
-    //     std::cout << "Random value on [0, " << 13 << "]: " << std::rand() % 13<< '\n';
+    //     for (auto e : row)
+    //     {
+    //         std::cout << e << " ";
+    //     }
+    //     std::cout << std::endl;
     // }
+
     return 0;
 }
