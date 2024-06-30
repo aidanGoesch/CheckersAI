@@ -1,0 +1,3 @@
+/Users/aidangoeschel/Documents/Coding/CheckersAI/build/CMakeFiles/checkers_game.dir
+/Users/aidangoeschel/Documents/Coding/CheckersAI/build/CMakeFiles/edit_cache.dir
+/Users/aidangoeschel/Documents/Coding/CheckersAI/build/CMakeFiles/rebuild_cache.dir

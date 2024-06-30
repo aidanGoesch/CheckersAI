@@ -13,25 +13,16 @@
 // }
 
 
-#include "checkers_board.h"
+#include "checkers_board/checkers_board.h"
+// #include <iostream>
 
 int main() 
 {
     CheckersBoard cb;
 
     cb.Play();
-
-    // "100010002000000100000000000000001";
-    // auto tmp = cb.deserializeBoard("100010002000000100000000000000001");
-
-    // for (auto row : tmp)
-    // {
-    //     for (auto e : row)
-    //     {
-    //         std::cout << e << " ";
-    //     }
-    //     std::cout << std::endl;
-    // }
+    
+    std::cout << "Process Finished" << std::endl;
 
     return 0;
 }
