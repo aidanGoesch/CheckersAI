@@ -1,0 +1,27 @@
+Changes for makeRandomMove:
+
+Params: pieceMap {
+    game_turn : map{
+        coordinate : CompSquare
+    }
+}
+
+
+Pseudo Code:
+
+if chaining
+    pieceToMove = chained piece
+else
+    get pieces that can be moved
+    pieceToMove = pick a random piece to move
+
+pick random place to move pieceToMove
+
+move piece
+
+if chaining
+    recurse
+
+update the squares around the location of the new position
+
+switch turn

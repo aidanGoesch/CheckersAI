@@ -577,8 +577,10 @@ void getCompMove()
 
 
 int CheckersBoard::winner()
-{
+{   
+    file << "SUB SUB DEBUG 1" << std::endl;
     checkKings();
+    file << "SUB SUB DEBUG 2" << std::endl;
     int compCount = 0;
     int playerCount = 0;
     for (int i = 0; i < 8; ++i)
@@ -592,6 +594,7 @@ int CheckersBoard::winner()
                 ++playerCount;
         }
     }
+    file << "SUB SUB DEBUG 3" << std::endl;
     if (compCount == 0 && playerCount > 0)   // player wins
     {   
         // std::cout << "PLAYER winner - no more pieces" << std::endl;
@@ -625,8 +628,11 @@ int CheckersBoard::winner()
             }
         }
     }
+    file << "SUB SUB DEBUG 4" << std::endl;
 
     auto func = [](const CompSquare& c) { return c.possibleMoves.size() > 0; };
+
+    file << "SUB SUB DEBUG 5" << std::endl;
 
     if (!std::any_of(playerPieces.begin(), playerPieces.end(), func))
     {
@@ -679,10 +685,12 @@ void CheckersBoard::Move()
     {
         for (int i = 0; i < 500 ; ++i)   // simulate 25 random games (probable can and should be more)
         {
+            file << "DEBUG 1 "<< i << std::endl;
             simulateRandomGame();
         }
-
+        file << "DEBUG 2" << std::endl;
         makeBestCompMove();
+        file << "DEBUG 3" << std::endl;
 
         m_Turn = PLAYER;
     }
@@ -794,68 +802,108 @@ std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> CheckersBoard::c
 
 bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> >& pieceMap, const int& y0 = -1, const int& x0 = -1)
 {
+    std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* pieces = &pieceMap[m_Turn];   // gets a list of pieces and their possible moves
+    std::vector<CompSquare*> moveablePieces;
+    size_t bound;
+    CompSquare* pieceToMove;
+
+    if (y0 == -1 && x0 == -1)  // if not chaining
+    {
+        for (auto piece : (*pieces))
+        {
+            if (piece.second != nullptr && piece.second->possibleMoves.size() > 0)
+            {
+                moveablePieces.push_back(piece.second);
+            }
+        }
+
+        bound = moveablePieces.size();
+        
+
+        auto tmp = static_cast<std::size_t>(distrib(m_Gen)) % bound;
+
+        file << tmp << moveablePieces.size() << std::endl;
+
+        pieceToMove = moveablePieces[tmp];
+    }
+    else
+    {
+        pieceToMove = (*pieces)[{y0, x0}];
+    }
+
+    bound = pieceToMove->possibleMoves.size();
+    std::pair<int, int> move = pieceToMove->possibleMoves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
+
+    int y = pieceToMove->coordinate.first;
+    int x = pieceToMove->coordinate.second;
+
+    int ny = move.first;
+    int nx = move.second;
+
+    // update the game board
+    m_Board[y][x].player = 0;
+    m_Board[ny][nx].player = m_Turn;
+
+    // transfer/update king status
+    m_Board[ny][nx].kinged = m_Board[y][x].kinged;
+    m_Board[y][x].kinged = false;
+
+    if (ny == 0 && m_Board[ny][nx].player == PLAYER)
+    {
+        m_Board[ny][nx].kinged = true;
+    }
+    else if (ny == 7 && m_Board[ny][nx].player == COMP)
+    {
+        m_Board[ny][nx].kinged = true;
+    }
+
+}
+
+bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> >& pieceMap, const int& y0 = -1, const int& x0 = -1)
+{
+
     // get pieces that can move
     std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* pieces = &pieceMap[m_Turn];   // gets a list of pieces and their possible moves
     std::vector<CompSquare*> moveablePieces;
     size_t bound;
     CompSquare* pieceToMove;
 
-    // if (DEBUG) {
-    //     std::cout << "pieces' possible moves: " << std::endl;
-    //     for (auto e : *pieces)
-    //     {
-    //         std::cout << "piece at " << e.coordinate.first << " " << e.coordinate.second << std::endl;
-    //         for (auto f : e.possibleMoves)
-    //         {
-    //             std::cout << "\t" << f.first << " " << f.second << std::endl;
-    //         }
-    //     }
-    // }
-
     if (y0 == -1 && x0 == -1)  // check for default params for chaining
     {
-        // std::cout << 1 << std::endl;
-        // filter out all of the pieces that can't be moved
+        file << 1 << std::endl;
+        // filter out all of the pieces that can't be moved - ERROR: this is filtering out pieces that can be moved as well
 
+        file << "DEBUG ACTUAL" << std::endl;
         for (auto e : (*pieces))
         {
+            file << "Coordinate: " << e.first.first << " " << e.first.second << std::endl;
             if (e.second != nullptr && e.second->possibleMoves.size() > 0)
             {
                 moveablePieces.push_back(e.second);
             }
         }
 
-
-
-        // std::copy_if(pieces->begin(), pieces->end(), std::back_inserter(moveablePieces), [](std::pair<const std::pair<int, int>, CompSquare*>* i){return i->second->possibleMoves.size()>0;} );
-        // std::cout << 2 << std::endl;
+        file << 2 << std::endl;
         // randomly pick a piece
         bound = moveablePieces.size();
         // std::cout << "START " << moveablePieces.size() << std::endl;
         PRINT_BOARD(m_Board);
-        for (auto j : (*pieces))
-        {
-            if (j.second != nullptr)
-                file << j.second->coordinate.first << " " << j.second->coordinate.second << " " << j.second->possibleMoves.size() << std::endl;
-        }
-        // for (auto j : moveablePieces)
-        // {
-        //     std::cout << j->coordinate.first << " " << j->coordinate.second << " " << j->possibleMoves.size() << std::endl;
-        // }
+        
+        auto tmp = static_cast<std::size_t>(distrib(m_Gen)) % bound;
 
-        pieceToMove = moveablePieces[static_cast<std::size_t>(distrib(m_Gen)) % bound];
+        file << tmp << moveablePieces.size() << std::endl;
+
+        pieceToMove = moveablePieces[tmp];
     }
     else
     {
-        // std::cout << 11 << std::endl;
+        file << 11 << std::endl;
         pieceToMove = (*pieces)[{y0, x0}];
-        // auto tmp = std::find_if(pieces->begin(), pieces->end(), 
-        //                 [y0, x0](std::pair<const std::pair<int, int>, CompSquare *>* c){ return c->second->coordinate.first == y0 && c->second->coordinate.second == x0; });  // finds the CompSquare with the same coordinate
-        // std::cout << 22 << std::endl;
-        // if (tmp != pieces->end()) pieceToMove = (*tmp).second;
+
+        file << 22 << std::endl;
     }
 
-    // std::cout << 3 << std::endl;
+    file << 3 << std::endl;
     // randomly pick somewhere to move
     bound = pieceToMove->possibleMoves.size();
     std::pair<int, int> move = pieceToMove->possibleMoves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
@@ -876,7 +924,7 @@ bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<st
         }
     }
 
-    // std::cout << 4 << std::endl;
+    file << 4 << std::endl;
     int ny = move.first;
     int nx = move.second;
 
@@ -899,19 +947,28 @@ bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<st
     // update CompSquare
     pieceToMove->coordinate = move;
     (*pieces)[{ny, nx}] = pieceToMove;  // update the key
-    (*pieces)[{y, x}] = nullptr;
 
-    // std::cout << 5 << std::endl;
+    auto iter = pieces->find({y, x}); 
+  
+    // Delete the pair with key if found 
+    if (iter != pieces->end()) { 
+        pieces->erase(iter); 
+    } 
+
+    // (*pieces)[{y, x}] = nullptr;
+
+    file << 5 << std::endl;
     
     bool chainStarted = false;
     if (abs(nx - x) > 1)  // check if it is taking another piece
     {
         chainStarted = true;
 
+        // calculate the offset of the old coordinate to get to the jumped piece
         int z = ((y - ny) / 2) + ny;
         int w = ((x - nx) / 2) + nx;
 
-        m_Board[z][w].player = 0;
+        m_Board[z][w].player = 0;  // delete jumped piece
 
         // find the piece that was taken
         std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* oppPieces = &pieceMap[ (m_Turn == PLAYER) ? COMP : PLAYER ];
@@ -920,6 +977,7 @@ bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<st
         if (takenPiece != oppPieces->end())  // remove the taken piece from the vector
         {
             oppPieces->erase({z, w});
+            pieces->erase({z, w});
         }
         
         pieceToMove->possibleMoves = highlightPossibleMoves(m_Turn, ny, nx, false, true);  // somehow make sure that this has an effect
@@ -973,7 +1031,7 @@ bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<st
         }
     }
 
-    // std::cout << 6 << std::endl;
+    file << 6 << std::endl;
 
     if (m_Turn == PLAYER) m_Turn = COMP;
     else m_Turn = PLAYER;
@@ -1055,6 +1113,7 @@ void CheckersBoard::simulateRandomGame()
     pieces[COMP] = compileCompPieces(COMP, false);
     pieces[PLAYER] = compileCompPieces(PLAYER, false);
 
+    file << "SUB DEBUG 1" << std::endl;
     while (winner() == 0)
     {
         prevNode = currentNode;
@@ -1071,10 +1130,10 @@ void CheckersBoard::simulateRandomGame()
                 file << std::endl;
             }
         }
-
+        file << "SUB DEBUG 2" << std::endl;
         auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
                         [&tmpKey](Node* n){ return n->m_Key == tmpKey; });
-
+        file << "SUB DEBUG 3" << std::endl;
         if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
         {
             currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
@@ -1085,12 +1144,13 @@ void CheckersBoard::simulateRandomGame()
         {
             currentNode = *cursor;
         }
+        file << "SUB DEBUG 4" << std::endl;
     }
 
     int simWinner = winner();
 
     if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
-
+    file << "SUB DEBUG 5" << std::endl;
     // back propogate
     for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
     {
@@ -1100,7 +1160,7 @@ void CheckersBoard::simulateRandomGame()
         }
         currentNode->m_TotalSimulations ++;  // update visit count
     }
-
+    file << "SUB DEBUG 6" << std::endl;
     // restore to previous game state
     m_Board = tmpBoard;
     m_Turn = tmpTurn;
