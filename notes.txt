@@ -1,27 +1,29 @@
-Changes for makeRandomMove:
+function simulateRandomCheckersGame():
+    board = initializeBoard()
+    currentPlayer = RED
+    
+    while not isGameOver(board):
+        moves = getQuickRandomMove(board, currentPlayer)
+        if moves is null:
+            break
+        
+        applyMove(board, moves)
+        
+        while isJumpMove(moves) and canContinueJumping(board, moves.endPosition):
+            additionalJump = getQuickRandomJump(board, moves.endPosition)
+            if additionalJump is null:
+                break
+            applyMove(board, additionalJump)
+            moves = additionalJump
+        
+        currentPlayer = oppositePlayer(currentPlayer)
+    
+    return getGameResult(board)
 
-Params: pieceMap {
-    game_turn : map{
-        coordinate : CompSquare
-    }
-}
+function getQuickRandomMove(board, player):
+    // Use bitboard operations to quickly find a single random legal move
+    // Return null if no moves are available
 
-
-Pseudo Code:
-
-if chaining
-    pieceToMove = chained piece
-else
-    get pieces that can be moved
-    pieceToMove = pick a random piece to move
-
-pick random place to move pieceToMove
-
-move piece
-
-if chaining
-    recurse
-
-update the squares around the location of the new position
-
-switch turn
+function getQuickRandomJump(board, startPosition):
+    // Quickly find a single random legal jump from the given position
+    // Return null if no jumps are available

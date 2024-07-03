@@ -859,186 +859,186 @@ bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<st
 
 }
 
-bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> >& pieceMap, const int& y0 = -1, const int& x0 = -1)
-{
+// bool CheckersBoard::makeRandomMove(std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> >& pieceMap, const int& y0 = -1, const int& x0 = -1)
+// {
 
-    // get pieces that can move
-    std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* pieces = &pieceMap[m_Turn];   // gets a list of pieces and their possible moves
-    std::vector<CompSquare*> moveablePieces;
-    size_t bound;
-    CompSquare* pieceToMove;
+//     // get pieces that can move
+//     std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* pieces = &pieceMap[m_Turn];   // gets a list of pieces and their possible moves
+//     std::vector<CompSquare*> moveablePieces;
+//     size_t bound;
+//     CompSquare* pieceToMove;
 
-    if (y0 == -1 && x0 == -1)  // check for default params for chaining
-    {
-        file << 1 << std::endl;
-        // filter out all of the pieces that can't be moved - ERROR: this is filtering out pieces that can be moved as well
+//     if (y0 == -1 && x0 == -1)  // check for default params for chaining
+//     {
+//         file << 1 << std::endl;
+//         // filter out all of the pieces that can't be moved - ERROR: this is filtering out pieces that can be moved as well
 
-        file << "DEBUG ACTUAL" << std::endl;
-        for (auto e : (*pieces))
-        {
-            file << "Coordinate: " << e.first.first << " " << e.first.second << std::endl;
-            if (e.second != nullptr && e.second->possibleMoves.size() > 0)
-            {
-                moveablePieces.push_back(e.second);
-            }
-        }
+//         file << "DEBUG ACTUAL" << std::endl;
+//         for (auto e : (*pieces))
+//         {
+//             file << "Coordinate: " << e.first.first << " " << e.first.second << std::endl;
+//             if (e.second != nullptr && e.second->possibleMoves.size() > 0)
+//             {
+//                 moveablePieces.push_back(e.second);
+//             }
+//         }
 
-        file << 2 << std::endl;
-        // randomly pick a piece
-        bound = moveablePieces.size();
-        // std::cout << "START " << moveablePieces.size() << std::endl;
-        PRINT_BOARD(m_Board);
+//         file << 2 << std::endl;
+//         // randomly pick a piece
+//         bound = moveablePieces.size();
+//         // std::cout << "START " << moveablePieces.size() << std::endl;
+//         PRINT_BOARD(m_Board);
         
-        auto tmp = static_cast<std::size_t>(distrib(m_Gen)) % bound;
+//         auto tmp = static_cast<std::size_t>(distrib(m_Gen)) % bound;
 
-        file << tmp << moveablePieces.size() << std::endl;
+//         file << tmp << moveablePieces.size() << std::endl;
 
-        pieceToMove = moveablePieces[tmp];
-    }
-    else
-    {
-        file << 11 << std::endl;
-        pieceToMove = (*pieces)[{y0, x0}];
+//         pieceToMove = moveablePieces[tmp];
+//     }
+//     else
+//     {
+//         file << 11 << std::endl;
+//         pieceToMove = (*pieces)[{y0, x0}];
 
-        file << 22 << std::endl;
-    }
+//         file << 22 << std::endl;
+//     }
 
-    file << 3 << std::endl;
-    // randomly pick somewhere to move
-    bound = pieceToMove->possibleMoves.size();
-    std::pair<int, int> move = pieceToMove->possibleMoves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
+//     file << 3 << std::endl;
+//     // randomly pick somewhere to move
+//     bound = pieceToMove->possibleMoves.size();
+//     std::pair<int, int> move = pieceToMove->possibleMoves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
 
-    int y = pieceToMove->coordinate.first;
-    int x = pieceToMove->coordinate.second;
+//     int y = pieceToMove->coordinate.first;
+//     int x = pieceToMove->coordinate.second;
 
-    if (DEBUG) {
-        // S = false;
-        file << "Move made: " << move.first << " " << move.second << std::endl;
-        for (auto row : m_Board)
-        {
-            for (auto e : row)
-            {
-                file << e.player;
-            }
-            file << std::endl;
-        }
-    }
+//     if (DEBUG) {
+//         // S = false;
+//         file << "Move made: " << move.first << " " << move.second << std::endl;
+//         for (auto row : m_Board)
+//         {
+//             for (auto e : row)
+//             {
+//                 file << e.player;
+//             }
+//             file << std::endl;
+//         }
+//     }
 
-    file << 4 << std::endl;
-    int ny = move.first;
-    int nx = move.second;
+//     file << 4 << std::endl;
+//     int ny = move.first;
+//     int nx = move.second;
 
-    m_Board[y][x].player = 0;
-    m_Board[ny][nx].player = m_Turn;
+//     m_Board[y][x].player = 0;
+//     m_Board[ny][nx].player = m_Turn;
 
-    // transfer/update king status
-    m_Board[ny][nx].kinged = m_Board[y][x].kinged;
-    m_Board[y][x].kinged = false;
+//     // transfer/update king status
+//     m_Board[ny][nx].kinged = m_Board[y][x].kinged;
+//     m_Board[y][x].kinged = false;
 
-    if (ny == 0 && m_Board[ny][nx].player == PLAYER)
-    {
-        m_Board[ny][nx].kinged = true;
-    }
-    else if (ny == 7 && m_Board[ny][nx].player == COMP)
-    {
-        m_Board[ny][nx].kinged = true;
-    }
+//     if (ny == 0 && m_Board[ny][nx].player == PLAYER)
+//     {
+//         m_Board[ny][nx].kinged = true;
+//     }
+//     else if (ny == 7 && m_Board[ny][nx].player == COMP)
+//     {
+//         m_Board[ny][nx].kinged = true;
+//     }
 
-    // update CompSquare
-    pieceToMove->coordinate = move;
-    (*pieces)[{ny, nx}] = pieceToMove;  // update the key
+//     // update CompSquare
+//     pieceToMove->coordinate = move;
+//     (*pieces)[{ny, nx}] = pieceToMove;  // update the key
 
-    auto iter = pieces->find({y, x}); 
+//     auto iter = pieces->find({y, x}); 
   
-    // Delete the pair with key if found 
-    if (iter != pieces->end()) { 
-        pieces->erase(iter); 
-    } 
+//     // Delete the pair with key if found 
+//     if (iter != pieces->end()) { 
+//         pieces->erase(iter); 
+//     } 
 
-    // (*pieces)[{y, x}] = nullptr;
+//     // (*pieces)[{y, x}] = nullptr;
 
-    file << 5 << std::endl;
+//     file << 5 << std::endl;
     
-    bool chainStarted = false;
-    if (abs(nx - x) > 1)  // check if it is taking another piece
-    {
-        chainStarted = true;
+//     bool chainStarted = false;
+//     if (abs(nx - x) > 1)  // check if it is taking another piece
+//     {
+//         chainStarted = true;
 
-        // calculate the offset of the old coordinate to get to the jumped piece
-        int z = ((y - ny) / 2) + ny;
-        int w = ((x - nx) / 2) + nx;
+//         // calculate the offset of the old coordinate to get to the jumped piece
+//         int z = ((y - ny) / 2) + ny;
+//         int w = ((x - nx) / 2) + nx;
 
-        m_Board[z][w].player = 0;  // delete jumped piece
+//         m_Board[z][w].player = 0;  // delete jumped piece
 
-        // find the piece that was taken
-        std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* oppPieces = &pieceMap[ (m_Turn == PLAYER) ? COMP : PLAYER ];
-        auto takenPiece = std::find_if(oppPieces->begin(), oppPieces->end(), [z, w](std::pair<std::pair<int, int>, CompSquare*> c) { return c.second != nullptr && c.second->coordinate.first == z && c.second->coordinate.second == w; });
+//         // find the piece that was taken
+//         std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash>* oppPieces = &pieceMap[ (m_Turn == PLAYER) ? COMP : PLAYER ];
+//         auto takenPiece = std::find_if(oppPieces->begin(), oppPieces->end(), [z, w](std::pair<std::pair<int, int>, CompSquare*> c) { return c.second != nullptr && c.second->coordinate.first == z && c.second->coordinate.second == w; });
 
-        if (takenPiece != oppPieces->end())  // remove the taken piece from the vector
-        {
-            oppPieces->erase({z, w});
-            pieces->erase({z, w});
-        }
+//         if (takenPiece != oppPieces->end())  // remove the taken piece from the vector
+//         {
+//             oppPieces->erase({z, w});
+//             pieces->erase({z, w});
+//         }
         
-        pieceToMove->possibleMoves = highlightPossibleMoves(m_Turn, ny, nx, false, true);  // somehow make sure that this has an effect
+//         pieceToMove->possibleMoves = highlightPossibleMoves(m_Turn, ny, nx, false, true);  // somehow make sure that this has an effect
 
-        // check for moves where you take another piece, otherwise stop
-        std::vector<std::pair<int, int> > possibleMovesFromNewPos = highlightPossibleMoves(m_Turn, ny, nx, false, true);
-        if (possibleMovesFromNewPos.size() > 0)
-        {
-            if (abs(possibleMovesFromNewPos[0].second - nx) > 1)
-                makeRandomMove(pieceMap, ny, nx);  // should make it so that it will only move the piece that is chaining
-        }
-    }
-    else
-    {
-        pieceToMove->possibleMoves = highlightPossibleMoves(m_Turn, ny, nx, false, false);
+//         // check for moves where you take another piece, otherwise stop
+//         std::vector<std::pair<int, int> > possibleMovesFromNewPos = highlightPossibleMoves(m_Turn, ny, nx, false, true);
+//         if (possibleMovesFromNewPos.size() > 0)
+//         {
+//             if (abs(possibleMovesFromNewPos[0].second - nx) > 1)
+//                 makeRandomMove(pieceMap, ny, nx);  // should make it so that it will only move the piece that is chaining
+//         }
+//     }
+//     else
+//     {
+//         pieceToMove->possibleMoves = highlightPossibleMoves(m_Turn, ny, nx, false, false);
 
 
-        file << "START2" << std::endl;
-        file << ny << " " << nx << " size: " << pieceToMove->possibleMoves.size() << std::endl;
+//         file << "START2" << std::endl;
+//         file << ny << " " << nx << " size: " << pieceToMove->possibleMoves.size() << std::endl;
 
-        PRINT_BOARD(m_Board);
+//         PRINT_BOARD(m_Board);
 
-        // for (int j = 0; j < pieces->size(); ++j)
-        // {
-        //     std::cout << (*pieces)[j]->coordinate.first << " " << (*pieces)[j]->coordinate.second << " size: " << (*pieces)[j]->possibleMoves.size() << std::endl;
-        // }
+//         // for (int j = 0; j < pieces->size(); ++j)
+//         // {
+//         //     std::cout << (*pieces)[j]->coordinate.first << " " << (*pieces)[j]->coordinate.second << " size: " << (*pieces)[j]->possibleMoves.size() << std::endl;
+//         // }
 
-    }
+//     }
 
-    // update the moves for the surrounding 4 squares as well
-    std::vector<std::pair<int, std::pair<int, int> >> toUpdate;  // each element stores the player of a square to update and then the coordinate that needs to be updated
+//     // update the moves for the surrounding 4 squares as well
+//     std::vector<std::pair<int, std::pair<int, int> >> toUpdate;  // each element stores the player of a square to update and then the coordinate that needs to be updated
 
-    if (y - 1 >= 0 && x - 1 >= 0 && m_Board[y - 1][x - 1].player != 0) toUpdate.push_back({m_Board[y - 1][x - 1].player, {y - 1, x - 1}});
-    if (y - 1 >= 0 && x + 1 <= 7 && m_Board[y - 1][x + 1].player != 0) toUpdate.push_back({m_Board[y - 1][x + 1].player, {y - 1, x + 1}});
-    if (y + 1 <= 7 && x - 1 >= 0 && m_Board[y + 1][x - 1].player != 0) toUpdate.push_back({m_Board[y + 1][x - 1].player, {y + 1, x - 1}});
-    if (y + 1 <= 7 && x + 1 <= 7 && m_Board[y + 1][x + 1].player != 0) toUpdate.push_back({m_Board[y + 1][x + 1].player, {y + 1, x + 1}});
+//     if (y - 1 >= 0 && x - 1 >= 0 && m_Board[y - 1][x - 1].player != 0) toUpdate.push_back({m_Board[y - 1][x - 1].player, {y - 1, x - 1}});
+//     if (y - 1 >= 0 && x + 1 <= 7 && m_Board[y - 1][x + 1].player != 0) toUpdate.push_back({m_Board[y - 1][x + 1].player, {y - 1, x + 1}});
+//     if (y + 1 <= 7 && x - 1 >= 0 && m_Board[y + 1][x - 1].player != 0) toUpdate.push_back({m_Board[y + 1][x - 1].player, {y + 1, x - 1}});
+//     if (y + 1 <= 7 && x + 1 <= 7 && m_Board[y + 1][x + 1].player != 0) toUpdate.push_back({m_Board[y + 1][x + 1].player, {y + 1, x + 1}});
 
-    PRINT_BOARD(m_Board);
+//     PRINT_BOARD(m_Board);
 
-    for (auto pieceToUpdate : toUpdate)
-    {
-        file << pieceToUpdate.first << ",{" << pieceToUpdate.second.first << ", " << pieceToUpdate.second.second << "}   piece moved (old pos): " << y << " " << x << "  piece moved (new pos): " << ny << " " << nx << std::endl;
-        for (auto p : pieceMap[pieceToUpdate.first])
-        {
-            file << p.first.first << " " << p.first.second << std::endl;
-        }
-        if (pieceMap[pieceToUpdate.first][pieceToUpdate.second] != nullptr)
-        {
-            pieceMap[pieceToUpdate.first][pieceToUpdate.second]->possibleMoves = highlightPossibleMoves(pieceToUpdate.first, pieceToUpdate.second.first, pieceToUpdate.second.second, false, false);
-            file << "updated size: " << pieceMap[pieceToUpdate.first][pieceToUpdate.second]->possibleMoves.size() << std::endl;
-        }
-    }
+//     for (auto pieceToUpdate : toUpdate)
+//     {
+//         file << pieceToUpdate.first << ",{" << pieceToUpdate.second.first << ", " << pieceToUpdate.second.second << "}   piece moved (old pos): " << y << " " << x << "  piece moved (new pos): " << ny << " " << nx << std::endl;
+//         for (auto p : pieceMap[pieceToUpdate.first])
+//         {
+//             file << p.first.first << " " << p.first.second << std::endl;
+//         }
+//         if (pieceMap[pieceToUpdate.first][pieceToUpdate.second] != nullptr)
+//         {
+//             pieceMap[pieceToUpdate.first][pieceToUpdate.second]->possibleMoves = highlightPossibleMoves(pieceToUpdate.first, pieceToUpdate.second.first, pieceToUpdate.second.second, false, false);
+//             file << "updated size: " << pieceMap[pieceToUpdate.first][pieceToUpdate.second]->possibleMoves.size() << std::endl;
+//         }
+//     }
 
-    file << 6 << std::endl;
+//     file << 6 << std::endl;
 
-    if (m_Turn == PLAYER) m_Turn = COMP;
-    else m_Turn = PLAYER;
+//     if (m_Turn == PLAYER) m_Turn = COMP;
+//     else m_Turn = PLAYER;
 
-    // return a pair with the piece and the move -- change return type
-    return chainStarted;   
-}
+//     // return a pair with the piece and the move -- change return type
+//     return chainStarted;   
+// }
 
 
 std::string CheckersBoard::serializeBoard() const
@@ -1096,6 +1096,93 @@ std::vector<std::vector<int> > CheckersBoard::deserializeBoard(const std::string
 }
 
 
+// void CheckersBoard::simulateRandomGame()
+// {
+//     // things that need to be reset after every game:
+//     const int tmpTurn = m_Turn;
+
+//     const std::vector<std::vector<Square> > tmpBoard = m_Board;   // this might need to be a copy
+//     bool S = true;
+
+//     Node* prevNode = nullptr;
+//     Node* currentNode = m_RootNode;
+//     bool chaining = false;
+
+//     std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> > pieces;
+
+//     pieces[COMP] = compileCompPieces(COMP, false);
+//     pieces[PLAYER] = compileCompPieces(PLAYER, false);
+
+//     file << "SUB DEBUG 1" << std::endl;
+//     while (winner() == 0)
+//     {
+//         prevNode = currentNode;
+//         chaining = makeRandomMove(pieces);
+
+//         std::string tmpKey = serializeBoard();
+
+//         if (DEBUG) {
+//             for (auto r : m_Board)
+//             {
+//                 for (auto e : r)
+//                     file << e.player;
+                
+//                 file << std::endl;
+//             }
+//         }
+//         file << "SUB DEBUG 2" << std::endl;
+//         auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
+//                         [&tmpKey](Node* n){ return n->m_Key == tmpKey; });
+//         file << "SUB DEBUG 3" << std::endl;
+//         if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
+//         {
+//             currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
+//             // m_GameStates[tmpKey] = currentNode;      // add to dictionary
+//             prevNode->m_ChildNodes.push_back(currentNode);
+//         }
+//         else
+//         {
+//             currentNode = *cursor;
+//         }
+//         file << "SUB DEBUG 4" << std::endl;
+//     }
+
+//     int simWinner = winner();
+
+//     if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
+//     file << "SUB DEBUG 5" << std::endl;
+//     // back propogate
+//     for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
+//     {
+//         if (currentNode->m_Turn == simWinner)
+//         {
+//             currentNode->m_WinningSimulations ++;
+//         }
+//         currentNode->m_TotalSimulations ++;  // update visit count
+//     }
+//     file << "SUB DEBUG 6" << std::endl;
+//     // restore to previous game state
+//     m_Board = tmpBoard;
+//     m_Turn = tmpTurn;
+    
+//     if (DEBUG) file << "Reset test: " << serializeBoard() << std::endl;
+// }
+
+std::vector<Move> CheckersBoard::compileMoves()
+{
+    ;
+}
+
+void CheckersBoard::applyMove(const Move& move)
+{
+    ;
+}
+
+bool CheckersBoard::isJumpMove(const Move& move)
+{
+    ;
+}
+
 void CheckersBoard::simulateRandomGame()
 {
     // things that need to be reset after every game:
@@ -1106,67 +1193,34 @@ void CheckersBoard::simulateRandomGame()
 
     Node* prevNode = nullptr;
     Node* currentNode = m_RootNode;
-    bool chaining = false;
 
-    std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> > pieces;
-
-    pieces[COMP] = compileCompPieces(COMP, false);
-    pieces[PLAYER] = compileCompPieces(PLAYER, false);
-
-    file << "SUB DEBUG 1" << std::endl;
-    while (winner() == 0)
+    while (true)  // make something so that you can check if there is a winner while moves are being compiled
     {
-        prevNode = currentNode;
-        chaining = makeRandomMove(pieces);
+        std::vector<Move> moves = compileMoves();  // compile a list of moves for every piece for the current player
 
-        std::string tmpKey = serializeBoard();
+        size_t bound = moves.size();
+        Move move = moves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
 
-        if (DEBUG) {
-            for (auto r : m_Board)
-            {
-                for (auto e : r)
-                    file << e.player;
-                
-                file << std::endl;
-            }
-        }
-        file << "SUB DEBUG 2" << std::endl;
-        auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
-                        [&tmpKey](Node* n){ return n->m_Key == tmpKey; });
-        file << "SUB DEBUG 3" << std::endl;
-        if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
+        applyMove(move);
+
+        while (isJumpMove(move)) // and can continue jumping
         {
-            currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
-            // m_GameStates[tmpKey] = currentNode;      // add to dictionary
-            prevNode->m_ChildNodes.push_back(currentNode);
+            int y = move.currentPos.first;
+            int x = move.currentPos.second;
+            std::vector< std::pair< int, int> > tmp_moves = highlightPossibleMoves(m_Turn);  // Change this so 
+
+            size_t tmp_bound = tmp_moves.size();
+            std::pair<int, int> tmp = tmp_moves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
+
+            move = Move{{y, x}, tmp};
+
+            applyMove(move, false);
         }
-        else
-        {
-            currentNode = *cursor;
-        }
-        file << "SUB DEBUG 4" << std::endl;
+
     }
 
-    int simWinner = winner();
-
-    if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
-    file << "SUB DEBUG 5" << std::endl;
-    // back propogate
-    for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
-    {
-        if (currentNode->m_Turn == simWinner)
-        {
-            currentNode->m_WinningSimulations ++;
-        }
-        currentNode->m_TotalSimulations ++;  // update visit count
-    }
-    file << "SUB DEBUG 6" << std::endl;
-    // restore to previous game state
-    m_Board = tmpBoard;
-    m_Turn = tmpTurn;
-    
-    if (DEBUG) file << "Reset test: " << serializeBoard() << std::endl;
 }
+
 
 
 double calculateExplorationParameter(int totalSimulations) {

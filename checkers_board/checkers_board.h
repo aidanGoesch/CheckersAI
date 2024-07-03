@@ -34,16 +34,19 @@ constexpr bool DEBUG = false;
 
 // bool S = true;
 
-struct pair_hash {
+struct pair_hash 
+{
     template <class T1, class T2>
-    std::size_t operator () (const std::pair<T1,T2> &pair) const {
+    std::size_t operator () (const std::pair<T1,T2> &pair) const 
+    {
         auto hash1 = std::hash<T1>{}(pair.first);
         auto hash2 = std::hash<T2>{}(pair.second);
         return hash1 ^ hash2;  // Combine the two hash values.
     }
 };
 
-struct Square {
+struct Square 
+{
     int player;
     bool selected;
     bool highlighted;
@@ -51,10 +54,10 @@ struct Square {
 };
 
 
-struct CompSquare {
-    std::pair<int, int> coordinate;
-    std::vector<std::pair<int, int> > possibleMoves;
-    // void opterator=(const CompSquare& c);
+struct Move
+{
+    std::pair<int, int> currentPos;
+    std::pair<int, int> newPos;
 };
 
 
@@ -93,7 +96,6 @@ public:
     std::string serializeBoard() const; // actually no fucking clue how to do this
     std::vector<std::vector<int> > deserializeBoard(const std::string& serial) const;
     std::vector<std::vector<Square> > m_Board;
-    bool makeRandomMove(std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> >& pieceMap, const int& y0, const int& x0);
 
 private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
@@ -108,6 +110,9 @@ private:
 
 
     // bool makeRandomMove(const int& player,  bool& S, const int& i);
+    std::vector<Move> compileMoves();
+    void applyMove(const Move& move);
+    bool isJumpMove(const Move& move) const;
     void simulateRandomGame();
 
     // std::string serializeBoard() const; // actually no fucking clue how to do this
