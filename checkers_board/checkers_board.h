@@ -87,9 +87,9 @@ public:
 
     void Draw();
 
-    std::vector<std::pair<int, int> > highlightPossibleMoves(const int& piece, const unsigned& y, const unsigned& x, const bool& modify, const bool& forceTake);
+    std::vector< Move > highlightPossibleMoves(const int& piece, const int& y, const int& x, const bool& modify, const bool& forceTake);
     
-    void Move();
+    void move();
 
     void Play();
 
@@ -106,13 +106,12 @@ private:
     int winner();
 
     void getCompMove();
-    std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> compileCompPieces(const int& p, const bool& chaining);
-
+    // std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> compileCompPieces(const int& p, const bool& chaining);
 
     // bool makeRandomMove(const int& player,  bool& S, const int& i);
     std::vector<Move> compileMoves();
     void applyMove(const Move& move);
-    bool isJumpMove(const Move& move) const;
+    bool isJumpMove(const Move& move);
     void simulateRandomGame();
 
     // std::string serializeBoard() const; // actually no fucking clue how to do this
