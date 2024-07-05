@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/aidangoeschel/Documents/Coding/CheckersAI/checkers_board
 
-CXX_FLAGSarm64 =  -Wall -Wextra -pedantic -lncurses -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+CXX_FLAGSarm64 =  -Wall -Wextra -pedantic -lncurses -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 
-CXX_FLAGS =  -Wall -Wextra -pedantic -lncurses -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+CXX_FLAGS =  -Wall -Wextra -pedantic -lncurses -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 

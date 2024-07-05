@@ -403,7 +403,7 @@ std::vector< Move > CheckersBoard::highlightPossibleMoves(const int& piece, cons
                 ret.push_back(Move{{y, x}, {y-2, x-2}});
             }
 
-            if (x < 7 && m_Board[y-1][x+1].player == opp && m_Board[y-2][x+2].player == 0)
+            if (x < 6 && m_Board[y-1][x+1].player == opp && m_Board[y-2][x+2].player == 0)
             {
                 if (modify) m_Board[y-2][x+2].highlighted = true;
 
@@ -425,7 +425,7 @@ std::vector< Move > CheckersBoard::highlightPossibleMoves(const int& piece, cons
                 ret.push_back(Move{{y, x}, {y+2, x-2}});
             }
 
-            if (x < 7 && m_Board[y+1][x+1].player == opp && m_Board[y+2][x+2].player == 0)
+            if (x < 6 && m_Board[y+1][x+1].player == opp && m_Board[y+2][x+2].player == 0)
             {
                 if (modify) m_Board[y+2][x+2].highlighted = true;
                 forceMove = true;
@@ -657,7 +657,7 @@ void CheckersBoard::move()
     }
     else if (m_Turn == COMP)
     {
-        for (int i = 0; i < 500 ; ++i)   // simulate 25 random games (probable can and should be more)
+        for (int i = 0; i < 1000 ; ++i)   // simulate 25 random games (probable can and should be more)
         {
             file << "DEBUG 1 "<< i << std::endl;
             simulateRandomGame();
@@ -1190,9 +1190,9 @@ void CheckersBoard::simulateRandomGame()
 
     while (true)  // make something so that you can check if there is a winner while moves are being compiled
     {
-        // file << "SIM1" << std::endl;
+        file << "SIM1" << std::endl;
         std::vector<Move> moves = compileMoves();  // compile a list of moves for every piece for the current player
-        // file << "SIM2" << std::endl;
+        file << "SIM2" << std::endl;
         size_t bound = moves.size();
 
         if (bound == 0)
@@ -1204,7 +1204,7 @@ void CheckersBoard::simulateRandomGame()
         Move move = moves[static_cast<std::size_t>(distrib(m_Gen)) % bound];
 
         applyMove(move);
-        // file << "SIM3" << std::endl;
+        file << "SIM3" << std::endl;
 
         while (isJumpMove(move)) // and can continue jumping
         {
@@ -1231,33 +1231,41 @@ void CheckersBoard::simulateRandomGame()
             // file << "jump move from " << move.currentPos.first << " " << move.currentPos.second << " to " << move.newPos.first << " " << move.newPos.second << " number of possible moves: " << tmp_bound << std::endl;
             applyMove(move);
         }
-        // file << "SIM4" << std::endl;
+        file << "SIM4" << std::endl;
 
         // Make a new node
         prevNode = currentNode;
 
         std::string tmpKey = serializeBoard();
 
+        // this takes a while - maybe a better way to do it
         auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
-                        [&tmpKey](Node* n){ return n->m_Key == tmpKey; });
+                        [&tmpKey](Node* n){ if (n == nullptr) return true;
+                        return n->m_Key == tmpKey; });
+
+        file << 1 << std::endl;
 
         
         if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
         {
+            file << 21 << std::endl;
             currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
             // m_GameStates[tmpKey] = currentNode;      // add to dictionary
             prevNode->m_ChildNodes.push_back(currentNode);
+            file << 22 << std::endl;
         }
         else
         {
+            file << 21 << std::endl;
             currentNode = *cursor;
+            file << 22 << std::endl;
         }
-        // file << "SIM5" << std::endl;
+        file << "SIM5" << std::endl;
         // switch the turn of the player
         m_Turn = (m_Turn == PLAYER) ? COMP : PLAYER;
     }
 
-    int simWinner = winner();
+    int simWinner = (m_Turn == PLAYER) ? COMP : PLAYER;
 
     if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
 

@@ -248,6 +248,9 @@ PKG_CONFIG_ARGN:STRING=
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
 
+//Path to a program.
+VALGRIND:FILEPATH=VALGRIND-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries
