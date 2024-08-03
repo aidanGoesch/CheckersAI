@@ -640,6 +640,11 @@ void CheckersBoard::updateRootNode()
         m_RootNode = *cursor;
         m_RootNode->m_ParentNode = nullptr;
     }  
+    else
+    {
+        file << "this would explain the problem" << std::endl;
+        m_RootNode = new Node{tmpKey, nullptr, false, (m_Turn == PLAYER) ? COMP : PLAYER};
+    }
 }
 
 
@@ -653,14 +658,15 @@ void CheckersBoard::makeBestCompMove()
         {
             childNode->calculateValue();
 
-            std::cout << "key: " << childNode->m_Key << std::endl;
+            // std::cout << "key: " << childNode->m_Key << std::endl;
         }
     }
     
+    // BUG IS SOMEWHERE IN HERE
 
     std::vector<Node*> children = m_RootNode->m_ChildNodes;
     Node* bestNode = *std::max_element(children.begin(), children.end(), [](Node* a, Node* b){ return a->m_Score < b->m_Score; });
-    file << "best move: " << bestNode->m_Key << std::endl;
+    file << "best move: " << bestNode->m_Key << " bestMoveKey == rootNodeKey" << (m_RootNode->m_Key == bestNode->m_Key) << std::endl;
 
     // de-serialize
     std::vector<std::vector<int> > optimalBoard = deserializeBoard(bestNode->m_Key);
@@ -863,8 +869,8 @@ void CheckersBoard::applyMove(const Move& move)
     int nx = move.newPos.second;
 
     // update the game board
+    m_Board[ny][nx].player = m_Board[y][x].player;
     m_Board[y][x].player = 0;
-    m_Board[ny][nx].player = m_Turn;
 
     // transfer/update king status
     m_Board[ny][nx].kinged = m_Board[y][x].kinged;
@@ -976,16 +982,19 @@ void CheckersBoard::simulateRandomGame()
 
         // this takes a while - maybe a better way to do it
         auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
-                        [&tmpKey](Node* n){ if (n == nullptr) return true;
-                        return n->m_Key == tmpKey; });
+                        [&tmpKey](Node* n)
+                        { 
+                            if (n == nullptr) return false;
+                            return n->m_Key == tmpKey; 
+                        });
 
         file << 1 << std::endl;
 
         
-        if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
+        if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not ALREADY in the children of currentNode so it can be added
         {
             file << 21 << std::endl;
-            currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
+            currentNode = new Node{tmpKey, prevNode, false, m_Turn}; 
             // m_GameStates[tmpKey] = currentNode;      // add to dictionary
             prevNode->m_ChildNodes.push_back(currentNode);
             file << 22 << std::endl;
@@ -996,7 +1005,7 @@ void CheckersBoard::simulateRandomGame()
             currentNode = *cursor;
             file << 22 << std::endl;
         }
-        file << "SIM5" << std::endl;
+        file << "SIM5 -- prevNodeKey: " << prevNode->m_Key << " currentNodeKey: " << currentNode->m_Key << "currentNodeKey == prevNodeKey" << (prevNode->m_Key == currentNode->m_Key) << std::endl;
         // switch the turn of the player
         m_Turn = (m_Turn == PLAYER) ? COMP : PLAYER;
     }
