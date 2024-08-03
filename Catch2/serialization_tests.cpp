@@ -9,7 +9,7 @@ TEST_CASE("serializationTestOne", "[Required]")
 
     std::string serial = cb.serializeBoard();
 
-    std::vector<std::vector<int>> deserial = cb.deserializeBoard(serial);
+    std::vector<std::vector<int> > deserial = cb.deserializeBoard(serial);
 
     for (int y = 0; y < 8; ++y)
     {
@@ -41,7 +41,7 @@ TEST_CASE("serializationTestThree", "[Required]")
 
     std::string serial = cb.serializeBoard();
 
-    std::vector<std::vector<int>> deserial = cb.deserializeBoard(serial);
+    std::vector<std::vector<int> > deserial = cb.deserializeBoard(serial);
 
     for (int y = 0; y < 8; ++y)
     {
