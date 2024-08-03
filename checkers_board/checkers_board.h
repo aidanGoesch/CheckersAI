@@ -102,7 +102,6 @@ private:
     void GetPlayerMove(const bool chaining);
     bool isChain(const unsigned& y, const unsigned& x, const unsigned& oppositePlayer);
     bool checkKings();
-    void movePiece();
     int winner();
 
     void getCompMove();
@@ -110,7 +109,7 @@ private:
 
     // bool makeRandomMove(const int& player,  bool& S, const int& i);
     std::vector<Move> compileMoves();
-    void applyMove(const Move& move);
+    bool applyMove(const Move& move);
     bool isJumpMove(const Move& move);
     void simulateRandomGame();
 

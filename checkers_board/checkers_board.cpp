@@ -495,30 +495,48 @@ void CheckersBoard::GetPlayerMove(const bool chaining)
         unsigned y = m_ToMove.first;
         unsigned x = m_ToMove.second;
 
-        auto a = highlightPossibleMoves(PLAYER, y, x, true);
+        if (!chaining)
+        {
+            auto a = highlightPossibleMoves(PLAYER, y, x, true);
+        }
+        else
+        {
+            auto a = highlightPossibleMoves(PLAYER, y, x, true, true);
+        }
 
         // get where the palyer wants to move the piece
         tmp = SelectSquare("Which Square Would You Like to Move This Piece to?", true);
         if (tmp && !chaining)  // if the player doesn't select a valid move they get to reselect the piece they want to move
         {
-        for (int i = 0; i < 8; ++i)
-        {
-            for (int j = 0; j < 8; ++j)
+            for (int i = 0; i < 8; ++i)
             {
-                // file << "why is this resetting" << std::endl;
-                m_Board[i][j].highlighted = false;
+                for (int j = 0; j < 8; ++j)
+                {
+                    // file << "why is this resetting" << std::endl;
+                    m_Board[i][j].highlighted = false;
+                }
             }
-        }
         }
     }
 
-    applyMove(Move{m_ToMove, m_Selected});
+    bool takeMove = applyMove(Move{m_ToMove, m_Selected});
 
     for (int i = 0; i < 8; ++i)
     {
         for (int j = 0; j < 8; ++j)
         {
             m_Board[i][j].highlighted = false;
+        }
+    }
+
+    if (takeMove)  // if a piece was taken by the last move
+    {
+        // check if another piece can be taken from the new position
+        std::vector< Move > possibleTakeMoves = highlightPossibleMoves(m_Turn, m_Selected.first, m_Selected.second, false, true);
+
+        if (possibleTakeMoves.size() > 0)
+        {
+            GetPlayerMove(true);
         }
     }
 }
@@ -860,7 +878,7 @@ std::vector<Move> CheckersBoard::compileMoves()
     return moves;
 }
 
-void CheckersBoard::applyMove(const Move& move)
+bool CheckersBoard::applyMove(const Move& move)
 {
     int y = move.currentPos.first;
     int x = move.currentPos.second;
@@ -893,7 +911,10 @@ void CheckersBoard::applyMove(const Move& move)
         int w = ((x - nx) / 2) + nx;
 
         m_Board[z][w].player = 0;  // delete jumped piece
+        return true;
     }
+
+    return false;
 }
 
 bool CheckersBoard::isJumpMove(const Move& move)
