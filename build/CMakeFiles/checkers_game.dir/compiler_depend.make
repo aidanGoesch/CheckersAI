@@ -129,17 +129,23 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/os_defines.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/algorithm \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/array \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/atomic \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/backward/binders.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bit \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/algorithmfwd.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/alloc_traits.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocated_ptr.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocator.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_base.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_futex.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_lockfree_defines.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_ios.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_ios.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_string.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_string.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/char_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/charconv.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/chrono.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/codecvt.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/concept_check.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/cpp_type_traits.h \
@@ -172,6 +178,7 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/node_handle.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream_insert.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/parse_numbers.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/postypes.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/predefined_ops.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ptr_traits.h \
@@ -180,9 +187,13 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/range_access.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/refwrap.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/requires_hosted.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr_base.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/specfun.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_abs.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_function.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_mutex.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_thread.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_algo.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_algobase.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_bvector.h \
@@ -202,7 +213,10 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/streambuf_iterator.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/string_view.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stringfwd.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/this_thread_sleep.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uniform_int_dist.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_lock.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_ptr.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unordered_map.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uses_allocator.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uses_allocator_args.h \
@@ -213,10 +227,12 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/clocale \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cmath \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/compare \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/condition_variable \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstddef \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdint \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdio \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdlib \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ctime \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cwchar \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cwctype \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/debug/assertions.h \
@@ -225,17 +241,20 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/aligned_buffer.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/alloc_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/atomicity.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/concurrence.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/numeric_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/string_conversions.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/type_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/fstream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/functional \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/future \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/initializer_list \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ios \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iosfwd \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iostream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/istream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/limits \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/mutex \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/new \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/numeric \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ostream \
@@ -244,11 +263,13 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: /Users/aidango
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/pstl/glue_numeric_defs.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/pstl/pstl_config.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/random \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ratio \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/stdexcept \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/streambuf \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/string \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/string_view \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/system_error \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/thread \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/bessel_function.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/beta_function.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/ell_integral.tcc \
@@ -403,17 +424,23 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/os_defines.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/algorithm \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/array \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/atomic \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/backward/binders.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bit \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/algorithmfwd.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/alloc_traits.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocated_ptr.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocator.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_base.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_futex.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_lockfree_defines.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_ios.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_ios.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_string.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_string.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/char_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/charconv.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/chrono.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/codecvt.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/concept_check.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/cpp_type_traits.h \
@@ -446,6 +473,7 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/node_handle.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream_insert.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/parse_numbers.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/postypes.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/predefined_ops.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ptr_traits.h \
@@ -454,9 +482,13 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/range_access.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/refwrap.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/requires_hosted.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr_base.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/specfun.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_abs.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_function.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_mutex.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_thread.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_algo.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_algobase.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_bvector.h \
@@ -476,7 +508,10 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/streambuf_iterator.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/string_view.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stringfwd.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/this_thread_sleep.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uniform_int_dist.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_lock.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_ptr.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unordered_map.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uses_allocator.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uses_allocator_args.h \
@@ -487,10 +522,12 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/clocale \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cmath \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/compare \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/condition_variable \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstddef \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdint \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdio \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdlib \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ctime \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cwchar \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cwctype \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/debug/assertions.h \
@@ -499,17 +536,20 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/aligned_buffer.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/alloc_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/atomicity.h \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/concurrence.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/numeric_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/string_conversions.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/type_traits.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/fstream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/functional \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/future \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/initializer_list \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ios \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iosfwd \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iostream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/istream \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/limits \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/mutex \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/new \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/numeric \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ostream \
@@ -518,11 +558,13 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/pstl/glue_numeric_defs.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/pstl/pstl_config.h \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/random \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ratio \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/stdexcept \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/streambuf \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/string \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/string_view \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/system_error \
+  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/thread \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/bessel_function.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/beta_function.tcc \
   /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/ell_integral.tcc \
@@ -562,8 +604,6 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/lib/gcc/current/gcc/aarch64-apple-darwin23/13/include-fixed/math.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/vector:
-
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/utility:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/typeinfo:
@@ -586,6 +626,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/exp_integral.tcc:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/thread:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/system_error:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/string_view:
@@ -600,6 +642,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/new:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/mutex:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/limits:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/istream:
@@ -607,6 +651,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iostream:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iosfwd:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/future:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/functional:
 
@@ -640,6 +686,10 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unordered_map.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_ptr.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_lock.h:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/random:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/uses_allocator_args.h:
@@ -654,25 +704,31 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/streambuf.tcc:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_seek_set.h:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_vector.h:
-
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/cstdio:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_uninitialized.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/gamma.tcc:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/streambuf:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_time_t.h:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_tempbuf.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_numeric.h:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_pair.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/stdio.h:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator_base_types.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_function.h:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator_base_funcs.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ios:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr_base.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/requires_hosted.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/vector:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_thread.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++allocator.h:
 
@@ -706,6 +762,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_string.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/chrono.h:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_bvector.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/memoryfwd.h:
@@ -736,6 +794,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/enable_special_members.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/concurrence.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rune_t.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/cxxabi_forced.h:
@@ -749,6 +809,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream_insert.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/basic_ios.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_base.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/alloc_traits.h:
 
@@ -766,6 +828,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/cpu_defines.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_futex.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_int32_t.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++locale.h:
@@ -781,6 +845,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/wchar.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/time.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mode_t.h:
 
@@ -816,6 +882,8 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/locale_classes.tcc:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/this_thread_sleep.h:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_function.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/cpp_type_traits.h:
@@ -830,6 +898,12 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/signal.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/tr1/gamma.tcc:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_numeric.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_time_t.h:
+
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/ostream.tcc:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_locale.h:
@@ -841,8 +915,6 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_u_int16_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ssize_t.h:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator_base_types.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_size_t.h:
 
@@ -872,23 +944,25 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mach_port_t.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_pair.h:
-
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/istream.tcc:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/exception_ptr.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_function.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/stdio.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_intptr_t.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ios:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator.h:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_iterator_base_funcs.h:
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_lockfree_defines.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_int8_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ctime:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/atomic:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_dev_t.h:
 
@@ -898,7 +972,15 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ct_rune_t.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/signal.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/pthread.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/parse_numbers.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_types/_uint8_t.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_mutex.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/_mcontext.h:
 
@@ -948,15 +1030,7 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_mutexattr_t.h:
 
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/streambuf:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_tempbuf.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_off_t.h:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/concept_check.h:
-
-/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_heap.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_mutex_t.h:
 
@@ -974,11 +1048,9 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_malloc.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/signal.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/pthread.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_int64_t.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocated_ptr.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/exception_defines.h:
 
@@ -1021,6 +1093,10 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/errno.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/memory_resource.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_vector.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_seek_set.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/machine/types.h:
 
@@ -1092,7 +1168,15 @@ CMakeFiles/checkers_game.dir/main.cpp.o: /Users/aidangoeschel/Documents/Coding/C
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/locale_classes.h:
 
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/condition_variable:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_types/_uint16_t.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ratio:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_heap.h:
+
+/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/concept_check.h:
 
 /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++config.h:
 

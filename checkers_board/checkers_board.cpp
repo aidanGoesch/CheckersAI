@@ -38,15 +38,11 @@ void ClearConsole() {
 
 CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(PLAYER), m_Gen{std::random_device{}()}, distrib{1, 100}, file{"error_log.txt"}
 {
-    // std::random_device rd;  // Will be used to obtain a seed for the random number engine
-    // gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    // std::uniform_int_distribution<> distrib(1, 100);
     newterm(getenv("TERM"), stdout, stdin);
     initscr();
     noecho();
     start_color();
     cbreak();
-    // file("error_log.txt");
     if (has_colors() == FALSE) {
         endwin();
         fprintf(stderr, "Your terminal does not support color\n");
@@ -58,6 +54,7 @@ CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(
     init_pair(3, COLOR_WHITE, COLOR_BLACK);  // Default piece color
     
     
+    // Initialize board
     unsigned offset = 1;
     for (int y = 0; y < 8; ++y)
     {
@@ -74,19 +71,32 @@ CheckersBoard::CheckersBoard() : m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(
         m_Board.push_back(tmp);
     }
 
-    // m_Board[6][3].selected = true;
-    // m_Board[3][6].player = PLAYER;
-    // m_Board[0][5].player = 0;
-    // m_Board[2][7].player = 0;
-    // m_Board[4][5].player = 0;
-    // m_Board[5][4].player = 0;
-    // m_Board[5][6].player = 0;
-    // m_Board[2][3].player = 0;
-    // m_Board[7][4].player = COMP;
-
     std::string rootKey = serializeBoard();
     m_RootNode = new Node{rootKey, nullptr, false, m_Turn};
-    // m_GameStates[rootKey] = m_RootNode;
+}
+
+// Constructor for creatng threads
+CheckersBoard::CheckersBoard(std::vector< std::vector<Square> >& board, const int& turn) : m_Board(board), m_Selected({6, 3}), m_ToMove({-1, -1}), m_Turn(turn), m_Gen{std::random_device{}()}, distrib{1, 100}, file{"error_log1.txt"}
+{
+    newterm(getenv("TERM"), stdout, stdin);
+    initscr();
+    noecho();
+    start_color();
+    cbreak();
+    if (has_colors() == FALSE) {
+        endwin();
+        fprintf(stderr, "Your terminal does not support color\n");
+        exit(1);
+    }
+
+    init_pair(1, COLOR_BLACK, COLOR_YELLOW); // Highlighted background
+    init_pair(2, COLOR_BLACK, COLOR_CYAN);   // Selected background
+    init_pair(3, COLOR_WHITE, COLOR_BLACK);  // Default piece color
+    
+    std::string rootKey = serializeBoard();
+    m_RootNode = new Node{rootKey, nullptr, false, m_Turn};
+
+    file << "Constructed Correctly" << std::endl;
 }
 
 CheckersBoard::~CheckersBoard()
@@ -188,7 +198,6 @@ void CheckersBoard::Draw() {
             // Determine color pair
             int colorPair = 3;
             if (e.highlighted) {
-                file << "there is a highlighted square" << std::endl;
                 colorPair = 1;  // Highlighted background
             }
             if (e.selected) {
@@ -297,20 +306,13 @@ void CheckersBoard::Draw() {
 bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove) {
     Draw();
     printw(prompt.c_str() + '\n');
-    // std::cout << "something should happen" << std::endl;
 
     int ch;
     while (true) {
         ch = getch(); // Get user input
 
-        if (ch != -1)
-        {
-            std::cout << "AAAAAA" << std::endl;
-        }
-
         switch (ch) {
             case 119:
-                std::cout << "something happened" << std::endl;
                 if (m_Selected.first > 0) {
                     m_Selected.first--;
                     m_Board[m_Selected.first + 1][m_Selected.second].selected = false;
@@ -318,7 +320,6 @@ bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove) 
                 }
                 break;
             case 115:
-            std::cout << "something happened" << std::endl;
                 if (m_Selected.first < 7) {
                     m_Selected.first++;
                     m_Board[m_Selected.first - 1][m_Selected.second].selected = false;
@@ -326,7 +327,6 @@ bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove) 
                 }
                 break;
             case 97:
-            std::cout << "something happened" << std::endl;
                 if (m_Selected.second > 0) {
                     m_Selected.second--;
                     m_Board[m_Selected.first][m_Selected.second + 1].selected = false;
@@ -334,7 +334,6 @@ bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove) 
                 }
                 break;
             case 100:
-            std::cout << "something happened" << std::endl;
                 if (m_Selected.second < 7) {
                     m_Selected.second++;
                     m_Board[m_Selected.first][m_Selected.second - 1].selected = false;
@@ -569,7 +568,6 @@ int CheckersBoard::winner()
             }
         }
     }
-    file << "SUB SUB DEBUG 3" << std::endl;
     if (compCount == 0 && playerCount > 0)   // player wins
     {   
         return PLAYER;
@@ -629,11 +627,15 @@ void CheckersBoard::move()
     }
     else if (m_Turn == COMP)
     {
-        for (int i = 0; i < 1000 ; ++i)   // simulate 1000 random games (probable can and should be more)
-        {
-            file << "DEBUG 1 "<< i << std::endl;
-            simulateRandomGame();
-        }
+        // Do this for 10 different threads
+
+        // for (int i = 0; i < 1000 ; ++i)   // simulate 1000 random games (probable can and should be more)
+        // {
+        //     file << "DEBUG 1 "<< i << std::endl;
+        //     simulateRandomGame();
+        // }
+        file << "DEBUG 1" << std::endl;
+        getCompMove();
         file << "DEBUG 2" << std::endl;
         makeBestCompMove();
         file << "DEBUG 3" << std::endl;
@@ -729,6 +731,11 @@ void CheckersBoard::Play()
 
 Node::Node(const std::string& key, Node* p, const bool& kinged, const int& turn) 
 : m_TotalSimulations(0), m_WinningSimulations(0), m_ParentNode(p), m_ChildNodes(std::vector<Node*>{}), m_Key(key), m_Score(-1.0), m_KingedPiece(kinged), m_Turn(turn) 
+{
+}
+
+Node::Node(Node* n)
+: m_TotalSimulations(n->m_TotalSimulations), m_WinningSimulations(n->m_WinningSimulations), m_ParentNode(n->m_ParentNode), m_ChildNodes(n->m_ChildNodes), m_Key(n->m_Key), m_Score(n->m_Score), m_KingedPiece(n->m_KingedPiece), m_Turn(n->m_Turn)
 {
 }
 
@@ -870,7 +877,7 @@ std::vector<Move> CheckersBoard::compileMoves()
         {
             if (m_Board[i][j].player == m_Turn)
             {
-                std::vector<Move> tmp = highlightPossibleMoves(m_Turn, i, j, false);
+                std::vector<Move> tmp = highlightPossibleMoves(m_Turn, i, j, false, false);
                 moves.insert(moves.end(), tmp.begin(), tmp.end());
             }
         }
@@ -941,8 +948,9 @@ bool CheckersBoard::isJumpMove(const Move& move)
     else return false;
 }
 
-void CheckersBoard::simulateRandomGame()
+Node* CheckersBoard::simulateRandomGame()
 {
+    /* This function will return the root of a tree that it generates by simulating a random game*/
     // things that need to be reset after every game:
     const int tmpTurn = m_Turn;
 
@@ -1014,11 +1022,11 @@ void CheckersBoard::simulateRandomGame()
         
         if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not ALREADY in the children of currentNode so it can be added
         {
-            file << 21 << std::endl;
+            file << 11 << std::endl;
             currentNode = new Node{tmpKey, prevNode, false, m_Turn}; 
             // m_GameStates[tmpKey] = currentNode;      // add to dictionary
             prevNode->m_ChildNodes.push_back(currentNode);
-            file << 22 << std::endl;
+            file << 12 << std::endl;
         }
         else
         {
@@ -1033,7 +1041,7 @@ void CheckersBoard::simulateRandomGame()
 
     int simWinner = (m_Turn == PLAYER) ? COMP : PLAYER;
 
-    if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
+    file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
 
     // back propogate
     for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
@@ -1049,6 +1057,56 @@ void CheckersBoard::simulateRandomGame()
     m_Board = tmpBoard;
     m_Turn = tmpTurn;
 
+    return m_RootNode;
+
+}  
+
+
+void CheckersBoard::getCompMove()
+{
+    // The program segfault somewhere in here and IDK why
+    std::vector<std::future<std::unique_ptr<Node>>> futures;
+    std::vector<std::thread> threads;
+
+    for (int i = 0; i < 10; ++i)  // create 10 threads
+    {
+        file << "DEBUG: thread iteration " << i << std::endl;
+        std::promise<std::unique_ptr<Node>> p;
+        std::future<std::unique_ptr<Node>> f = p.get_future();
+
+        std::thread th(threadedFunction, m_Board, m_Turn, 500, std::move(p));
+        threads.push_back(std::move(th));
+
+        futures.push_back(std::move(f));
+    }
+
+    for (auto& thread : threads) {
+        if (thread.joinable()) {
+            thread.join(); // Join the thread after its work is done
+        }
+    }
+
+    for (auto& future : futures) {
+        try {
+            std::unique_ptr<Node> tmpRoot = future.get(); // Get the result from the future
+            // mergeTree(tmpRoot); // Merge the results (this function needs to be defined)
+        } catch (const std::exception& e) {
+            // Handle any exceptions that were set in the promise
+            std::cerr << "Exception caught: " << e.what() << std::endl;
+        }
+    }
+}
+
+
+Node* CheckersBoard::threadedFunction(std::vector< std::vector<Square>> board, const int turn, const int simulations, std::promise<std::unique_ptr<Node>> sharedData)
+{
+    CheckersBoard tmp = CheckersBoard(board, turn);
+    for (int i = 0; i < simulations ; ++i)
+    {
+        tmp.simulateRandomGame();
+    }
+    std::unique_ptr<Node> result = std::make_unique<Node>(tmp.m_RootNode); // Ensure this is properly managed
+    sharedData.set_value(std::move(result)); 
 }
 
 

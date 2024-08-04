@@ -272,4 +272,25 @@ CMakeFiles/checkers_game.dir/checkers_board/checkers_board.cpp.o: \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/curses.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ncurses_dll.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/unctrl.h \
- /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/curses.h
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/curses.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/thread \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_thread.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_ptr.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/this_thread_sleep.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/chrono.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ratio \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ctime \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/parse_numbers.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/future \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/mutex \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/std_mutex.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/unique_lock.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/condition_variable \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/shared_ptr_base.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/allocated_ptr.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/ext/concurrence.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_base.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_lockfree_defines.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/atomic_futex.h \
+ /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/atomic

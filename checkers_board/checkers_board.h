@@ -12,6 +12,8 @@
 #include <functional>
 #include <fstream>
 #include <ncurses.h>
+#include <thread>
+#include <future>
 
 
 constexpr int COMP = 1;
@@ -66,6 +68,7 @@ class Node
 public:
     double calculateValue();
     Node(const std::string& key, Node* p, const bool& kinged, const int& turn);
+    Node(Node* n);
 
     unsigned m_TotalSimulations;
     unsigned m_WinningSimulations;
@@ -83,6 +86,7 @@ class CheckersBoard
 {
 public:
     CheckersBoard();
+    CheckersBoard(std::vector< std::vector<Square> >& board, const int& turn);
     ~CheckersBoard();
 
     void Draw();
@@ -95,8 +99,11 @@ public:
 
     std::string serializeBoard() const; // actually no fucking clue how to do this
     std::vector<std::vector<int> > deserializeBoard(const std::string& serial) const;
-    std::vector<std::vector<Square> > m_Board;
+    std::vector< std::vector<Square> > m_Board;
 
+    Node* simulateRandomGame();
+
+    Node* m_RootNode;
 private:
     bool SelectSquare(const std::string& prompt, bool selectingMove);
     void GetPlayerMove(const bool chaining);
@@ -105,13 +112,13 @@ private:
     int winner();
 
     void getCompMove();
+    void mergeTree(Node* other);
     // std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> compileCompPieces(const int& p, const bool& chaining);
 
     // bool makeRandomMove(const int& player,  bool& S, const int& i);
     std::vector<Move> compileMoves();
     bool applyMove(const Move& move);
     bool isJumpMove(const Move& move);
-    void simulateRandomGame();
 
     // std::string serializeBoard() const; // actually no fucking clue how to do this
     // std::vector<std::vector<int> > deserializeBoard(const std::string& serial) const;
@@ -119,6 +126,7 @@ private:
     void makeBestCompMove();
     void updateRootNode();
 
+    static Node* threadedFunction(std::vector< std::vector<Square>> board, const int turn, const int simulations, std::promise<std::unique_ptr<Node>> sharedData);
 
     // std::vector<std::vector<Square> > m_Board;
     std::pair<unsigned, unsigned> m_Selected;  
@@ -127,7 +135,6 @@ private:
     std::mt19937 m_Gen;
     std::uniform_int_distribution<> distrib; // Uniform distribution
 
-    Node* m_RootNode;
     std::ofstream file;
 };
 
