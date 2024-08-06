@@ -105,73 +105,6 @@ CheckersBoard::~CheckersBoard()
     return ;
 }
 
-// void CheckersBoard::Draw()
-// {
-//     ClearConsole();
-//     std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
-//     for (auto row : m_Board)
-//     {
-//         std::cout << "|";
-//         for (auto e : row)
-//         {
-//             int bg = 0;
-//             if ( e.highlighted ) { bg = FOREGROUND_RED | FOREGROUND_GREEN ; }
-//             if ( e.selected ) { bg = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE; }
-
-//             if ( e.player == 0 )
-//             {
-//                 SetConsoleColors(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, bg);
-//                 std::cout << "   ";         
-//             } else 
-//             {
-//                 if ( e.player == 1 ) { SetConsoleColors(FOREGROUND_RED, bg); }
-//                 else if (e.player == 2 ) { SetConsoleColors(FOREGROUND_BLUE, bg); }
-
-//                 std::cout << " ● ";
-//             }
-            
-//             SetConsoleColors(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, 0);
-//             std::cout << "|";
-            
-//         }
-//         std::cout << std::endl;
-//         std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
-//     }
-// }
-
-// void CheckersBoard::Draw() {
-//     ClearConsole();
-//     printw("+---+---+---+---+---+---+---+---+");
-//     for (auto row : m_Board) {
-//         printw("|");
-//         for (auto e : row) {
-//             std::string piece;
-
-//             // Determine piece representation based on player
-//             if (e.player == 1) {
-//                 piece = " ● ";
-//             } else if (e.player == 2) {
-//                 piece = " ○ ";
-//             } else {
-//                 piece = "   ";
-//             }
-
-//             // Apply highlighting and selection colors
-//             std::string textColor = ANSI_COLOR_RESET;
-//             std::string bgColor = ANSI_COLOR_RESET;
-//             if (e.highlighted) {
-//                 bgColor = ANSI_BG_YELLOW;
-//             } else if (e.selected) {
-//                 bgColor = ANSI_BG_CYAN;
-//             }
-
-//             // Output piece with colors
-//             std::cout << bgColor << textColor << piece << ANSI_COLOR_RESET << "|";
-//         }
-//         std::cout << std::endl;
-//         std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
-//     }
-// }
 
 void CheckersBoard::Draw() {
     // Clear the console (screen) using ncurses
@@ -222,86 +155,6 @@ void CheckersBoard::Draw() {
     refresh();
 }
 
-
-// bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove)
-// {
-//     Draw();
-//     std::cout << prompt << std::endl;
-
-//     HANDLE hConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
-
-//     if (hConsoleInput == INVALID_HANDLE_VALUE) {
-//         std::cerr << "Error getting console input handle." << std::endl;
-//         return true;
-//     }
-
-//     INPUT_RECORD irInBuf[128];
-//     DWORD cNumRead;
-
-//     SetConsoleMode(hConsoleInput, ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
-
-//     while (true) {
-//         if (ReadConsoleInput(hConsoleInput, irInBuf, 128, &cNumRead)) {
-//             for (DWORD i = 0; i < cNumRead; ++i) {
-//                 if (irInBuf[i].EventType == KEY_EVENT && irInBuf[i].Event.KeyEvent.bKeyDown) {
-//                     // Handle key press event
-//                     char pressedKey = irInBuf[i].Event.KeyEvent.uChar.AsciiChar;
-
-//                     unsigned y = m_Selected.first; 
-//                     unsigned x = m_Selected.second;
-
-
-//                     if (pressedKey == '\r') {
-//                         if (selectingMove && m_Board[y][x].highlighted) return false;
-//                         if (! selectingMove && m_Board[y][x].player == PLAYER)
-//                         {
-//                             m_ToMove = {y, x};
-//                             return false;  // this doesn't matter
-//                         }
-//                         if (selectingMove) return true;
-//                     }
-
-//                     if (pressedKey == 'w')
-//                     {
-//                         if ( y >= 1) {
-//                             m_Selected = {y-1, x};
-
-//                             m_Board[y][x].selected = false;
-//                             m_Board[y-1][x].selected = true;
-//                         }
-//                     } else if (pressedKey == 's')
-//                     {
-//                         if ( y + 1 < 8) {
-//                             m_Selected = {y+1, x};
-                            
-//                             m_Board[y][x].selected = false;
-//                             m_Board[y+1][x].selected = true;
-//                         }
-//                     } else if (pressedKey == 'a')
-//                     {
-//                         if ( x >= 1) {
-//                             m_Selected = {y, x-1};
-
-//                             m_Board[y][x].selected = false;
-//                             m_Board[y][x-1].selected = true;
-//                         }
-//                     } else if (pressedKey == 'd')
-//                     {
-//                         if ( x + 1 < 8) {
-//                             m_Selected = {y, x+1};
-                            
-//                             m_Board[y][x].selected = false;
-//                             m_Board[y][x+1].selected = true;
-//                         }
-//                     }
-
-//                     Draw();
-//                     std::cout << prompt << std::endl;
-//                 }
-//             }
-//         }
-//     }
-// }
 
 bool CheckersBoard::SelectSquare(const std::string& prompt, bool selectingMove) {
     Draw();
@@ -795,78 +648,6 @@ std::vector<std::vector<int> > CheckersBoard::deserializeBoard(const std::string
 }
 
 
-// void CheckersBoard::simulateRandomGame()
-// {
-//     // things that need to be reset after every game:
-//     const int tmpTurn = m_Turn;
-
-//     const std::vector<std::vector<Square> > tmpBoard = m_Board;   // this might need to be a copy
-//     bool S = true;
-
-//     Node* prevNode = nullptr;
-//     Node* currentNode = m_RootNode;
-//     bool chaining = false;
-
-//     std::unordered_map<int, std::unordered_map<std::pair<int, int>, CompSquare*, pair_hash> > pieces;
-
-//     pieces[COMP] = compileCompPieces(COMP, false);
-//     pieces[PLAYER] = compileCompPieces(PLAYER, false);
-
-//     file << "SUB DEBUG 1" << std::endl;
-//     while (winner() == 0)
-//     {
-//         prevNode = currentNode;
-//         chaining = makeRandomMove(pieces);
-
-//         std::string tmpKey = serializeBoard();
-
-//         if (DEBUG) {
-//             for (auto r : m_Board)
-//             {
-//                 for (auto e : r)
-//                     file << e.player;
-                
-//                 file << std::endl;
-//             }
-//         }
-//         file << "SUB DEBUG 2" << std::endl;
-//         auto cursor = std::find_if(prevNode->m_ChildNodes.begin(), prevNode->m_ChildNodes.end(), 
-//                         [&tmpKey](Node* n){ return n->m_Key == tmpKey; });
-//         file << "SUB DEBUG 3" << std::endl;
-//         if (cursor == prevNode->m_ChildNodes.end())  // Check to see if the node is not in the children of currentNode
-//         {
-//             currentNode = new Node{tmpKey, prevNode, false, m_Turn};  // change this so that it points at the parent
-//             // m_GameStates[tmpKey] = currentNode;      // add to dictionary
-//             prevNode->m_ChildNodes.push_back(currentNode);
-//         }
-//         else
-//         {
-//             currentNode = *cursor;
-//         }
-//         file << "SUB DEBUG 4" << std::endl;
-//     }
-
-//     int simWinner = winner();
-
-//     if (DEBUG) file << "winner: " << simWinner << "  board: " << currentNode->m_Key << std::endl;
-//     file << "SUB DEBUG 5" << std::endl;
-//     // back propogate
-//     for ( ; currentNode != nullptr ; currentNode = currentNode->m_ParentNode)
-//     {
-//         if (currentNode->m_Turn == simWinner)
-//         {
-//             currentNode->m_WinningSimulations ++;
-//         }
-//         currentNode->m_TotalSimulations ++;  // update visit count
-//     }
-//     file << "SUB DEBUG 6" << std::endl;
-//     // restore to previous game state
-//     m_Board = tmpBoard;
-//     m_Turn = tmpTurn;
-    
-//     if (DEBUG) file << "Reset test: " << serializeBoard() << std::endl;
-// }
-
 std::vector<Move> CheckersBoard::compileMoves()
 {
     std::vector<Move> moves;
@@ -884,6 +665,7 @@ std::vector<Move> CheckersBoard::compileMoves()
     }
     return moves;
 }
+
 
 bool CheckersBoard::applyMove(const Move& move)
 {
@@ -924,6 +706,7 @@ bool CheckersBoard::applyMove(const Move& move)
     return false;
 }
 
+
 bool CheckersBoard::isJumpMove(const Move& move)
 {
     int y = move.currentPos.first;
@@ -947,6 +730,7 @@ bool CheckersBoard::isJumpMove(const Move& move)
     }
     else return false;
 }
+
 
 Node* CheckersBoard::simulateRandomGame()
 {
@@ -1110,7 +894,6 @@ Node* CheckersBoard::threadedFunction(std::vector< std::vector<Square>> board, c
 }
 
 
-
 double calculateExplorationParameter(int totalSimulations) {
     if (totalSimulations < 500) {
         return sqrt(2);
@@ -1120,7 +903,6 @@ double calculateExplorationParameter(int totalSimulations) {
         return 1.0;  // Less exploration as the AI becomes more confident in its decisions
     }
 }
-
 
 
 double Node::calculateValue() 
